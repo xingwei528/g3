@@ -2,6 +2,8 @@ node_modules/
 
 src/**/*.js
 src/**/*.js.map
+src/**/*.jsx
+src/**/*.jsx.map
 *.log
 .DS_Store
 Thumbs.db

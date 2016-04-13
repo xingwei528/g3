@@ -1,0 +1,4 @@
+source:       .
+destination:  ./public
+
+history: browserHistory

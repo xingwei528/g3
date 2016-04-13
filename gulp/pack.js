@@ -42,22 +42,26 @@ function pack(name) {
 }
 
 function dev(name, callback) {
-  //var filename = name.split('/')[1].substr(0, 3) + '-' + name.split('/')[1].substr(3) + '.js'
-  var filename = _.kebabCase(name.split('/')[1]) + '.js'
   var options = {
-    entry: './' + name + '.js',
+    entry: './' + name + '.jsx',
     output: {
       path: path.join(__dirname, '../../../public/assets/js'),
       publicPath: "/assets/",
       filename: "bundle.js"
     },
     resolve: {
-      extensions: ['', '.webpack.js', '.web.js', '.js']
+      extensions: ['', '.webpack.js', '.web.js', '.jsx', '.js']
     },
     module: {
       loaders: [
-        { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
-        { test: /\.less$/, exclude: /node_modules/, loader: 'style!css!less' }
+        {
+          test: /\.jsx?$/,
+          exclude: /(node_modules|bower_components)/,
+          loader: 'babel', // 'babel-loader' is also a legal name to reference
+          query: {
+            presets: ['react']
+          }
+        }
       ]
     },
     devtool: "sourcemap",

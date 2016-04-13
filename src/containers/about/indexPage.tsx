@@ -1,6 +1,4 @@
 import * as React from 'react'
-import * as utils from '../../lib/utils'
-import {Loading} from '../../lib/components'
 
 export default class IndexPage extends React.Component<{}, {}> {
   render() {

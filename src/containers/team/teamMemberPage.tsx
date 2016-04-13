@@ -1,6 +1,5 @@
 import * as React from 'react'
-import * as utils from '../../lib/utils'
-import * as client from '../../lib/client'
+import {WebRequest} from '../../lib/http'
 
 interface P {
   params: {
@@ -28,7 +27,7 @@ export default class IndexPage extends React.Component<P, S> {
 
   componentDidMount() {
     const url = '/data/team/' + this.props.params.username + '.json'
-    client.default.request.get(url, '', (err, res: string) => {
+    WebRequest.get(url, (err, res: string) => {
       const response: S = JSON.parse(res)
       this.setState({
         name: response.name,

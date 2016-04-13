@@ -1,7 +1,5 @@
 import * as React from 'react'
 import { IndexLink, Link } from 'react-router'
-import * as links from '../../constants/links'
-import * as utils from '../../lib/utils'
 
 interface P {
   children?: any
@@ -10,7 +8,7 @@ interface P {
 export default class IndexPage extends React.Component<P, {}> {
   render() {
     if (this.props.children) return this.props.children
-    
+
     return (
       <div id="team">
                 <div className="team-index-listing">
