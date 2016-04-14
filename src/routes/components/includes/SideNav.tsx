@@ -17,17 +17,16 @@ export default class SideNav extends React.Component<{}, {}> {
           </ul>
           <h2>What We Do</h2>
           <ul>
-              <li><a href="/projects"><i className="icon work" /> <span>Our work</span></a></li>
-              <li><a href="/engineering"><i className="icon engineering" /> <span>Engineering</span></a></li>
-              <li><a href="/innovation"><i className="icon innovation" /> <span>Innovation</span></a></li>
+              <li><Link to="/projects" activeClassName="active"><i className="icon work" /> <span>Our work</span></Link></li>
+              <li><Link to="/technology" activeClassName="active"><i className="icon engineering" /> <span>Technology</span></Link></li>
           </ul>
           <h2>More</h2>
           <ul>
-              <li><a href="/careers"><i className="icon careers" /> <span>Careers</span></a></li>
-              <li><a href="/blog"><i className="icon blog" /> <span>Blog</span></a></li>
-              <li><a href="/contact-us"><i className="icon contact" /> <span>Contact us</span></a></li>
+              <li><Link to="/jobs" activeClassName="active"><i className="icon careers" /> <span>Jobs</span></Link></li>
+              <li><Link to="/blog" activeClassName="active"><i className="icon blog" /> <span>Blog</span></Link></li>
+              <li><Link to="/contact" activeClassName="active"><i className="icon contact" /> <span>Contact us</span></Link></li>
           </ul>
-          <a className="btn" href="/contact-us"><i className="icon talk" /><span>Let's&nbsp;talk</span></a>
+          <Link to="/contact" className="btn"><i className="icon talk" /><span>Let's&nbsp;talk</span></Link>
           <button id="menu_button" />
       </div>
     )

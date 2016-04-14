@@ -14,7 +14,7 @@ var app = express()
 app.use(compression())
 
 // serve our static stuff like index.css
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'www.tivix.com')))
 
 // send all requests to index.html so browserHistory in React Router works
 app.get('*', function (req, res) {

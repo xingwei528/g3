@@ -1,0 +1,26 @@
+{
+  "web": [
+    {
+      "id": "phillyvoice",
+      "name": "PhillyVoice",
+      "title": "An innovative digital publisher in the Philadelphia region.",
+      "imageUrl": "/uploads/images/phillyvoice-home.0afbb519.fill-593x416-c0.jpg"
+    }
+  ],
+  "mobile": [
+    {
+      "id": "phillyvoice",
+      "name": "PhillyVoice",
+      "title": "An innovative digital publisher in the Philadelphia region.",
+      "imageUrl": "/uploads/images/phillyvoice-home.0afbb519.fill-593x416-c0.jpg"
+    }
+  ],
+  "openSource": [
+    {
+      "id": "phillyvoice",
+      "name": "PhillyVoice",
+      "title": "An innovative digital publisher in the Philadelphia region.",
+      "imageUrl": "/uploads/images/phillyvoice-home.0afbb519.fill-593x416-c0.jpg"
+    }
+  ]
+}

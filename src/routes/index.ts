@@ -12,6 +12,11 @@ const rootRoute = {
     childRoutes: [
       require('./About'),
       require('./Team'),
+      require('./Projects'),
+      require('./Technology'),
+      require('./Jobs'),
+      require('./Blog'),
+      require('./Contact'),
       require('./NotFound'),
     ]
   }]

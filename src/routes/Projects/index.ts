@@ -1,5 +1,5 @@
 module.exports = {
-  path: '/team',
+  path: '/projects',
 
   getIndexRoute(location, cb) {
     cb(null, require('./routes/Index'))
@@ -8,7 +8,7 @@ module.exports = {
   getChildRoutes(location, cb) {
     require.ensure([], (require) => {
       cb(null, [
-        require('./routes/Member'),
+        require('./routes/Project'),
       ])
     })
   }

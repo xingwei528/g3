@@ -177,12 +177,9 @@ footer#footer div.footer-inner {
         width: 1063px
     }
 }
-section, #homepage #client_logos, #team .team-index-listing, #team .team-grid-outer, #team #testimonial_section, #team_member .member, #content_container #blog_post header, #blog_index #content_container header, #content_container #blog_post main, #blog_index #content_container main, #content_container #blog_post footer, #blog_index #content_container footer, .blog-pagination-container, #projects #intro, #projects #web, #projects #mobile, #projects #opensource, #projects .project, #projects .screen-section, #projects .story-section, #services .service, #services .service-blurbs, #services .service-testimonial, #lp.lp-a header .subhead, #lp.lp-a section .main, #lp.lp-a section .clients, #content_container #static .static-body, #contact section, #careers section {
+section, #homepage #client_logos, #team .team-index-listing, #team .team-grid-outer, #team #testimonial_section, #team_member .member, #blog_post #content_container header, #blog_index #content_container header, #blog_post #content_container main, #blog_index #content_container main, #blog_post #content_container footer, #blog_index #content_container footer, .blog-pagination-container, #projects #intro, #projects #web, #projects #mobile, #projects #opensource, #projects .project, #projects .screen-section, #projects .story-section, #services .service, #services .service-blurbs, #services .service-testimonial, #lp.lp-a header .subhead, #lp.lp-a section .main, #lp.lp-a section .clients, #content_container #static .static-body, #contact section, #careers section {
     margin-left: -8px;
     margin-right: -8px
-}
-#projects #intro {
-    background-image: none;
 }
 .wftable {
     width: 100%;
@@ -304,11 +301,11 @@ section, #homepage #client_logos, #team .team-index-listing, #team .team-grid-ou
 .responsive-object.embed-responsive-4by3 {
     padding-bottom: 75%
 }
-.container:before, .container:after, .row:before, .row:after, footer#footer div.footer-inner:before, footer#footer div.footer-inner:after, section:before, section:after, #homepage #client_logos:before, #homepage #client_logos:after, #team .team-index-listing:before, #team .team-index-listing:after, #team .team-grid-outer:before, #team .team-grid-outer:after, #team #testimonial_section:before, #team #testimonial_section:after, #team_member .member:before, #team_member .member:after, #content_container #blog_post header:before, #content_container #blog_post header:after, #blog_index #content_container header:before, #blog_index #content_container header:after, #content_container #blog_post main:before, #content_container #blog_post main:after, #blog_index #content_container main:before, #blog_index #content_container main:after, #content_container #blog_post footer:before, #content_container #blog_post footer:after, #blog_index #content_container footer:before, #blog_index #content_container footer:after, .blog-pagination-container:before, .blog-pagination-container:after, #projects #intro:before, #projects #intro:after, #projects #web:before, #projects #web:after, #projects #mobile:before, #projects #mobile:after, #projects #opensource:before, #projects #opensource:after, #projects .project:before, #projects .project:after, #projects .screen-section:before, #projects .screen-section:after, #projects .story-section:before, #projects .story-section:after, #services .service:before, #services .service:after, #services .service-blurbs:before, #services .service-blurbs:after, #services .service-testimonial:before, #services .service-testimonial:after, #lp.lp-a header .subhead:before, #lp.lp-a header .subhead:after, #lp.lp-a section .main:before, #lp.lp-a section .main:after, #lp.lp-a section .clients:before, #lp.lp-a section .clients:after, #content_container #static .static-body:before, #content_container #static .static-body:after, #contact section:before, #contact section:after, #careers section:before, #careers section:after {
+.container:before, .container:after, .row:before, .row:after, footer#footer div.footer-inner:before, footer#footer div.footer-inner:after, section:before, section:after, #homepage #client_logos:before, #homepage #client_logos:after, #team .team-index-listing:before, #team .team-index-listing:after, #team .team-grid-outer:before, #team .team-grid-outer:after, #team #testimonial_section:before, #team #testimonial_section:after, #team_member .member:before, #team_member .member:after, #blog_post #content_container header:before, #blog_post #content_container header:after, #blog_index #content_container header:before, #blog_index #content_container header:after, #blog_post #content_container main:before, #blog_post #content_container main:after, #blog_index #content_container main:before, #blog_index #content_container main:after, #blog_post #content_container footer:before, #blog_post #content_container footer:after, #blog_index #content_container footer:before, #blog_index #content_container footer:after, .blog-pagination-container:before, .blog-pagination-container:after, #projects #intro:before, #projects #intro:after, #projects #web:before, #projects #web:after, #projects #mobile:before, #projects #mobile:after, #projects #opensource:before, #projects #opensource:after, #projects .project:before, #projects .project:after, #projects .screen-section:before, #projects .screen-section:after, #projects .story-section:before, #projects .story-section:after, #services .service:before, #services .service:after, #services .service-blurbs:before, #services .service-blurbs:after, #services .service-testimonial:before, #services .service-testimonial:after, #lp.lp-a header .subhead:before, #lp.lp-a header .subhead:after, #lp.lp-a section .main:before, #lp.lp-a section .main:after, #lp.lp-a section .clients:before, #lp.lp-a section .clients:after, #content_container #static .static-body:before, #content_container #static .static-body:after, #contact section:before, #contact section:after, #careers section:before, #careers section:after {
     content: " ";
     display: table
 }
-.container:after, .row:after, footer#footer div.footer-inner:after, section:after, #homepage #client_logos:after, #team .team-index-listing:after, #team .team-grid-outer:after, #team #testimonial_section:after, #team_member .member:after, #content_container #blog_post header:after, #blog_index #content_container header:after, #content_container #blog_post main:after, #blog_index #content_container main:after, #content_container #blog_post footer:after, #blog_index #content_container footer:after, .blog-pagination-container:after, #projects #intro:after, #projects #web:after, #projects #mobile:after, #projects #opensource:after, #projects .project:after, #projects .screen-section:after, #projects .story-section:after, #services .service:after, #services .service-blurbs:after, #services .service-testimonial:after, #lp.lp-a header .subhead:after, #lp.lp-a section .main:after, #lp.lp-a section .clients:after, #content_container #static .static-body:after, #contact section:after, #careers section:after {
+.container:after, .row:after, footer#footer div.footer-inner:after, section:after, #homepage #client_logos:after, #team .team-index-listing:after, #team .team-grid-outer:after, #team #testimonial_section:after, #team_member .member:after, #blog_post #content_container header:after, #blog_index #content_container header:after, #blog_post #content_container main:after, #blog_index #content_container main:after, #blog_post #content_container footer:after, #blog_index #content_container footer:after, .blog-pagination-container:after, #projects #intro:after, #projects #web:after, #projects #mobile:after, #projects #opensource:after, #projects .project:after, #projects .screen-section:after, #projects .story-section:after, #services .service:after, #services .service-blurbs:after, #services .service-testimonial:after, #lp.lp-a header .subhead:after, #lp.lp-a section .main:after, #lp.lp-a section .clients:after, #content_container #static .static-body:after, #contact section:after, #careers section:after {
     clear: both
 }
 
@@ -2011,7 +2008,7 @@ section, #homepage #client_logos, #team .team-index-listing, #team .team-grid-ou
         width: 1201px
     }
 }
-#team #content_container, #team_member #content_container, #content_container#blog_post , #blog_index #content_container, #projects #content_container, #services #content_container, .tvx-center-container, #lp.lp-a section, #content_container #static {
+#team #content_container, #team_member #content_container, #blog_post #content_container, #blog_index #content_container, #projects #content_container, #services #content_container, .tvx-center-container, #lp.lp-a section, #content_container #static {
     margin-right: auto;
     margin-left: auto;
     padding-left: 8px;
@@ -2019,7 +2016,7 @@ section, #homepage #client_logos, #team .team-index-listing, #team .team-grid-ou
 }
 @media(min-width:1292px) {}
 @media(min-width:1441px) {
-    #team #content_container, #team_member #content_container, #content_container#blog_post , #blog_index #content_container, #projects #content_container, #services #content_container, .tvx-center-container, #lp.lp-a section, #content_container #static {
+    #team #content_container, #team_member #content_container, #blog_post #content_container, #blog_index #content_container, #projects #content_container, #services #content_container, .tvx-center-container, #lp.lp-a section, #content_container #static {
         width: 1201px
     }
 }
@@ -2336,7 +2333,7 @@ body {
     .col-md-offset-2, #lp.lp-a header h2, #lp.lp-a section.no-testimonials .main .blurbs, #lp.lp-a section.no-blurbs .main .testimonial {
         margin-left: 16.66666667%
     }
-    .col-md-offset-1, #team .team-intro, #team #team_grid, #team #testimonial_section .testimonial, #content_container #blog_post article, #blog_index #content_container article, #projects #intro .work-intro, #projects .work-intro, #projects .story-section.has-testimonial .description, #projects .story-section.has-testimonial.has-carousel .description, #projects #testimonial_section, #services .service-intro, #lp.lp-a section .main .blurbs, #lp.lp-a section .main .testimonial, #lp.lp-a section .clients .client-container, #lp.lp-a #testimonial2 blockquote, #content_container #static .static-content, #content_container #static header, #contact section .form, #contact section .offices, #careers .content, #careers section .form, #careers section .offices {
+    .col-md-offset-1, #team .team-intro, #team #team_grid, #team #testimonial_section .testimonial, #blog_post #content_container article, #blog_index #content_container article, #projects #intro .work-intro, #projects .work-intro, #projects .story-section.has-testimonial .description, #projects .story-section.has-testimonial.has-carousel .description, #projects #testimonial_section, #services .service-intro, #lp.lp-a section .main .blurbs, #lp.lp-a section .main .testimonial, #lp.lp-a section .clients .client-container, #lp.lp-a #testimonial2 blockquote, #content_container #static .static-content, #content_container #static header, #contact section .form, #contact section .offices, #careers .content, #careers section .form, #careers section .offices {
         margin-left: 8.33333333%
     }
     .col-md-offset-0, #services .service-blurbs .service-image, #static.no-menu #content_container>.static-content, #static.no-menu #content_container>header, #careers #contact .offices, #careers #careers .offices {
@@ -2444,7 +2441,7 @@ body {
         width: 1063px
     }
 }
-.row, section, #homepage #client_logos, #team .team-index-listing, #team .team-grid-outer, #team #testimonial_section, #team_member .member, #content_container #blog_post header, #blog_index #content_container header, #content_container #blog_post main, #blog_index #content_container main, #content_container #blog_post footer, #blog_index #content_container footer, .blog-pagination-container, #projects #intro, #projects #web, #projects #mobile, #projects #opensource, #projects .project, #projects .screen-section, #projects .story-section, #services .service, #services .service-blurbs, #services .service-testimonial, #lp.lp-a header .subhead, #lp.lp-a section .main, #lp.lp-a section .clients, #content_container #static .static-body, #contact section, #careers section {
+.row, section, #homepage #client_logos, #team .team-index-listing, #team .team-grid-outer, #team #testimonial_section, #team_member .member, #blog_post #content_container header, #blog_index #content_container header, #blog_post #content_container main, #blog_index #content_container main, #blog_post #content_container footer, #blog_index #content_container footer, .blog-pagination-container, #projects #intro, #projects #web, #projects #mobile, #projects #opensource, #projects .project, #projects .screen-section, #projects .story-section, #services .service, #services .service-blurbs, #services .service-testimonial, #lp.lp-a header .subhead, #lp.lp-a section .main, #lp.lp-a section .clients, #content_container #static .static-body, #contact section, #careers section {
     margin-left: -8px;
     margin-right: -8px
 }
@@ -4188,12 +4185,12 @@ li.L0, li.L1, li.L2, li.L3, li.L5, li.L6, li.L7, li.L8 {
     text-decoration: none;
     color: #4f4f4f
 }
-#content_container #blog_post article, #blog_index #content_container article {
+#blog_post #content_container article, #blog_index #content_container article {
     margin-top: 32px;
     margin-bottom: 16px
 }
 @media screen and (max-width:767px) {
-    #content_container #blog_post article, #blog_index #content_container article {
+    #blog_post #content_container article, #blog_index #content_container article {
         margin-top: 8px
     }
 }
