@@ -1,9 +1,14 @@
 node_modules/
+*.log
+.DS_Store
+Thumbs.db
 
 src/**/*.js
 src/**/*.js.map
 src/**/*.jsx
 src/**/*.jsx.map
-*.log
-.DS_Store
-Thumbs.db
+
+gulp/**/*.js
+gulp/**/*.js.map
+gulp/**/*.jsx
+gulp/**/*.jsx.map
