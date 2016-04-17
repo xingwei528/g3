@@ -8,9 +8,20 @@ const copySync = require('./copySync')
 const removeSync = require('./removeSync')
 const isFile = require('./isFile')
 
-function parse(src: string, dest: string) {
-  copySync(src, dest)
-  fse.walk(dest).on('readable', function () {
+function parse(config: models.Config, callback) {
+  copySync(config.source, config._g3Path)
+
+  let appJS = "const React = require('react');"
+  appJS += "const dom = require('react-dom');"
+  appJS += "const router = require('react-router');"
+  appJS += "const config = require('./config');"
+  appJS += "dom.render("
+  appJS += "  <router.Router history={router." + config.history + "} routes={config}/>,"
+  appJS += "  document.getElementById('root')"
+  appJS += ");"
+  fse.createOutputStream(path.join(config._g3Path, 'app.jsx')).write(appJS)
+
+  fse.walk(config._g3Path).on('readable', function () {
     var item
     while (item = this.read()) {
       const filepath = item.path
@@ -62,26 +73,10 @@ function parse(src: string, dest: string) {
           ws.write(configJS)
           removeSync(filepath)
         }
-        // path.join(filepath, 'config.json')
-        // if (isMarkdown(filepath)) {
-        //   const content = fm(fse.readFileSync(filepath).toString())
-        //   let filename = path.basename(filepath)
-        //   filename = filename.substr(0, filename.lastIndexOf('.'))
-        //   const obj = _.assign({}, content.attributes, {
-        //     id: filename,
-        //     body: marked.parse(content.body)
-        //   })
-        //   const dirPath = getDirPath(filepath)
-        //   const jPath = filepath.substr(0, filepath.lastIndexOf('.')) + '.json'
-        //   console.log(jPath)
-        //   const ws = fse.createOutputStream(jPath)
-        //   ws.write(JSON.stringify(obj))
-        //   let arr = dirFiles[dirPath] || []
-        //   arr.push(obj)
-        //   dirFiles[dirPath] = arr
-        // }
       }
     }
+  }).on('end', function () {
+    callback()
   })
 }
 

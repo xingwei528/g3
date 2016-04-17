@@ -17,9 +17,12 @@
   ],
   "files": [
     "demo.ts",
+    "fslib/copyAppFiles.ts",
     "fslib/copySync.ts",
+    "fslib/getConfig.ts",
     "fslib/getDirPath.ts",
     "fslib/index.ts",
+    "fslib/isDirectory.ts",
     "fslib/isFile.ts",
     "fslib/isMarkdown.ts",
     "fslib/mdToJSON.ts",

@@ -1,0 +1,1 @@
+const React = require('react');const dom = require('react-dom');const router = require('react-router');const config = require('./config');dom.render(  <router.Router history={router.hashHistory} routes={config}/>,  document.getElementById('root'));
