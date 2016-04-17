@@ -6,10 +6,13 @@ var webpack = require('webpack')
 var WebpackDevServer = require("webpack-dev-server")
 import * as fslib from './fslib'
 
-gulp.task('dev', function(callback) {
-  fslib.mdToJSON('./data');
+gulp.task('demo-build', function(callback) {
+  fslib.parse('./demo/src', './demo/.g3');
+})
+
+gulp.task('demo-run', function(callback) {
   var options = {
-    entry: './src/index.jsx',
+    entry: './demo/.g3/root.jsx',
     output: {
       path: path.join(__dirname, './public/assets/js'),
       publicPath: "/",
@@ -33,7 +36,7 @@ gulp.task('dev', function(callback) {
     devtool: "sourcemap",
     debug: true
   }
-  var port = 9393
+  var port = 3030
 
   var compiler = webpack(options)
   return new WebpackDevServer(compiler, {

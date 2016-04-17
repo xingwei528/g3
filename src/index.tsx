@@ -1,9 +1,10 @@
-import React from 'react'
+import * as React from 'react'
 import { render } from 'react-dom'
 import { Router, Route, browserHistory, IndexRoute } from 'react-router'
-import routes from './routes'
+
+const config = require('./config')
 
 render(
-  <Router history={browserHistory} routes={routes} />,
+  <Router history={browserHistory} routes={config} />,
   document.getElementById('root')
 )

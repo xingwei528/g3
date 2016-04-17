@@ -2110,7 +2110,7 @@ declare namespace __React {
 }
 
 declare module "react" {
-    export default __React;
+    export = __React;
 }
 
 declare namespace JSX {

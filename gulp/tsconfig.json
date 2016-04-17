@@ -16,7 +16,16 @@
     "!node_modules/**/*.ts"
   ],
   "files": [
-    "fslib.ts",
+    "demo.ts",
+    "fslib/copySync.ts",
+    "fslib/getDirPath.ts",
+    "fslib/index.ts",
+    "fslib/isFile.ts",
+    "fslib/isMarkdown.ts",
+    "fslib/mdToJSON.ts",
+    "fslib/parse.ts",
+    "fslib/removeSync.ts",
+    "models.ts",
     "pack.ts",
     "typings/fs-extra/fs-extra.d.ts",
     "typings/lodash/lodash.d.ts",

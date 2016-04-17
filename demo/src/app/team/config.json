@@ -1,0 +1,6 @@
+{
+  "path": "/team",
+  "children": [
+    "./member"
+  ]
+}

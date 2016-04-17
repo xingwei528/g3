@@ -1,0 +1,13 @@
+{
+    "path": "/",
+    "template": "./app",
+    "children": [
+      "./about",
+      "./team",
+      "./projects",
+      "./technology",
+      "./jobs",
+      "./blog",
+      "./contact"
+    ]
+}
