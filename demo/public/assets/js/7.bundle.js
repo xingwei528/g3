@@ -1,1 +1,0 @@
-webpackJsonp([7],{222:function(n,t,e){"use strict";n.exports={path:"/team/:id",getIndexRoute:function(n,t){t(null,{getComponent:function(n,t){e.e(8,function(n){t(null,e(223))})}})}}}});

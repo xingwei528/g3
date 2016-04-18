@@ -1,6 +1,6 @@
 {
     "path": "/",
-    "template": "./app",
+    "layout": "./app",
     "children": [
       "./about",
       "./team",

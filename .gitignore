@@ -1,14 +1,7 @@
 node_modules/
+.g3/
+public/
 *.log
+*.map
 .DS_Store
 Thumbs.db
-
-src/**/*.js
-src/**/*.js.map
-src/**/*.jsx
-src/**/*.jsx.map
-
-gulp/**/*.js
-gulp/**/*.js.map
-gulp/**/*.jsx
-gulp/**/*.jsx.map

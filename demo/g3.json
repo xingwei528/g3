@@ -1,5 +1,5 @@
 {
   "source": "./src",
   "destination": "./public",
-  "history": "hashHistory"
+  "history": "browserHistory"
 }

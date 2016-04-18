@@ -1,1 +1,0 @@
-webpackJsonp([15],{238:function(n,t,o){"use strict";n.exports={path:"/blog/:id",getIndexRoute:function(n,t){t(null,{getComponent:function(n,t){o.e(16,function(n){t(null,o(239))})}})}}}});

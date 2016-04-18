@@ -11,13 +11,11 @@ class Intro extends React.Component {
               <h5>View projects by:</h5>
               <ul>
                   <li><a href="#web">Web <i className="fa fa-angle-right"/></a></li>
-                  <li><a href="#mobile">Mobile <i className="fa fa-angle-right"/></a></li>
                   <li><a href="#opensource">Open source <i className="fa fa-angle-right"/></a></li>
-              </ul>
+                </ul>
           </div>
       </div>);
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Intro;
-//# sourceMappingURL=Intro.jsx.map

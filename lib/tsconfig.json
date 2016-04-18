@@ -1,0 +1,70 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "declaration": false,
+    "sourceMap": true,
+    "jsx": "preserve",
+    "watch": true,
+    "noImplicitAny": false,
+    "removeComments": true
+  },
+  "filesGlob": [
+    "**/*.ts",
+    "**/*.tsx",
+    "!node_modules/**/*.ts"
+  ],
+  "files": [
+    "bin/index.ts",
+    "commands/build.ts",
+    "commands/index.ts",
+    "commands/run.ts",
+    "commands/serve.ts",
+    "fslib/copyAppFiles.ts",
+    "fslib/copySync.ts",
+    "fslib/getConfig.ts",
+    "fslib/getPrefix.ts",
+    "fslib/index.ts",
+    "fslib/isDirectory.ts",
+    "fslib/isFile.ts",
+    "fslib/isMarkdown.ts",
+    "fslib/parse.ts",
+    "fslib/prepareG3.ts",
+    "fslib/readFileSync.ts",
+    "fslib/removeSync.ts",
+    "fslib/writeDATA.ts",
+    "fslib/writeHTML.ts",
+    "models/config.ts",
+    "models/configJSON.ts",
+    "models/const.ts",
+    "models/index.ts",
+    "typings/fs-extra/fs-extra.d.ts",
+    "typings/lodash/lodash.d.ts",
+    "typings/marked/marked.d.ts",
+    "typings/node-uuid/node-uuid.d.ts",
+    "typings/node/node.d.ts"
+  ],
+  "exclude": [
+    "bower_components",
+    "node_modules",
+    "public"
+  ],
+  "formatCodeOptions": {
+    "indentSize": 2,
+    "tabSize": 2,
+    "newLineCharacter": "\r\n",
+    "convertTabsToSpaces": true,
+    "insertSpaceAfterCommaDelimiter": true,
+    "insertSpaceAfterSemicolonInForStatements": true,
+    "insertSpaceBeforeAndAfterBinaryOperators": true,
+    "insertSpaceAfterKeywordsInControlFlowStatements": true,
+    "insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+    "insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
+    "placeOpenBraceOnNewLineForFunctions": false,
+    "placeOpenBraceOnNewLineForControlBlocks": false
+  },
+  "atom": {
+    "rewriteTsconfig": true
+  }
+}
