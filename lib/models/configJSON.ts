@@ -1,5 +1,6 @@
 export class ConfigJSON {
   path: string
   layout: string
-  children: Array<string>
+  includes: Array<string>
+  excludes: Array<string>
 }

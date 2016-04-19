@@ -1,6 +1,7 @@
 {
-    "children": [
-        "./app",
-        "./404"
+    "path": "",
+    "includes": [
+      "app",
+      "404"
     ]
 }

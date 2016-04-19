@@ -1,7 +1,7 @@
-var path = require('path');
-var _ = require('lodash');
-var webpack = require('webpack')
-var WebpackDevServer = require("webpack-dev-server")
+import * as path from 'path'
+import * as _ from 'lodash'
+import * as webpack from 'webpack'
+const WebpackDevServer = require("webpack-dev-server")
 import * as models from '../models'
 import * as fslib from '../fslib'
 
@@ -12,9 +12,9 @@ export function run(appPath) {
     return false
   }
 
-  console.log(config._g3Path)
-
   fslib.parse(config, () => {
+    fslib.watch(config)
+
     var options = {
       entry: path.join(config._g3Path, models.Const.FILE_APP_JSX),
       output: {

@@ -28,7 +28,6 @@ export function writeDATA(config: models.Config) {
           })
           const dirPath = path.dirname(filepath)
           const jPath = filepath.substr(0, filepath.lastIndexOf('.')) + '.json'
-          console.log(jPath)
           const ws = fse.createOutputStream(jPath)
           ws.write(JSON.stringify(obj))
           let arr = dirFiles[dirPath] || []
@@ -38,7 +37,6 @@ export function writeDATA(config: models.Config) {
 
           let routePath = path.relative(dataPath, filepath)
           routePath = routePath.substr(0, routePath.lastIndexOf('.'))
-          console.log(routePath)
           writeHTML(config, routePath, '')
         }
       }
@@ -46,7 +44,6 @@ export function writeDATA(config: models.Config) {
   }).on('end', function () {
     _.keys(dirFiles).forEach((dirPath: string) => {
       const arr = dirFiles[dirPath] || []
-      console.log(path.join(dirPath, 'index.json'))
       const ws = fse.createOutputStream(path.join(dirPath, 'index.json'))
       ws.write(JSON.stringify(arr))
     })

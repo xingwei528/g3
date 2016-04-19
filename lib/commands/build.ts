@@ -1,7 +1,6 @@
-var path = require('path');
-var _ = require('lodash');
-var webpack = require('webpack')
-var WebpackDevServer = require("webpack-dev-server")
+import * as path from 'path'
+import * as _ from 'lodash'
+import * as webpack from 'webpack'
 import * as models from '../models'
 import * as fslib from '../fslib'
 
@@ -48,7 +47,11 @@ export function build(appPath) {
           "electron": "electron"
       },
       plugins: [
-        new webpack.optimize.UglifyJsPlugin({minimize: true}),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        }),
         new webpack.DefinePlugin({
           'process.env': {
             NODE_ENV: JSON.stringify(process.env.NODE_ENV ? process.env.NODE_ENV : 'production'),

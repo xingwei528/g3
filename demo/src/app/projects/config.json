@@ -1,6 +1,3 @@
 {
-  "path": "/projects",
-  "children": [
-    "./project"
-  ]
+    "excludes": ["components"]
 }
