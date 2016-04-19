@@ -4,7 +4,7 @@ import * as models from '../models'
 
 export function watch (config: models.Config) {
   const watcher = chokidar.watch(config._appPath, {
-    ignored: /[\/\\]\./
+    ignored: /\.git|node_modules|bower_components|\.sass\-cache|[\/\\]\./
   })
   let isReady = false
 
