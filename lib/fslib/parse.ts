@@ -58,15 +58,18 @@ function parseConfig(config: models.Config, sourceDir: models.SourceDir): string
 export function parse(config: models.Config, callback) {
   fslib.copySync(config.source, config._g3Path)
 
-  let appJS = "const React = require('react');"
-  appJS += "const ReactDOM = require('react-dom');"
-  appJS += "const router = require('react-router');"
-  appJS += "const config = require('./config');"
-  appJS += "ReactDOM.render("
-  appJS += "  <router.Router history={router." + config.history + "} routes={config}/>,"
-  appJS += "  document.getElementById('" + models.Const.DOM_REACT_ROOT + "')"
-  appJS += ");"
-  fse.createOutputStream(path.join(config._g3Path, models.Const.FILE_APP_JSX)).write(appJS)
+  const appPath = path.join(config._g3Path, models.Const.FILE_APP_JSX)
+  if (!fslib.isFile(appPath)) {
+    let appJS = "const React = require('react');"
+    appJS += "const ReactDOM = require('react-dom');"
+    appJS += "const router = require('react-router');"
+    appJS += "const config = require('./config');"
+    appJS += "ReactDOM.render("
+    appJS += "  <router.Router history={router." + config.history + "} routes={config}/>,"
+    appJS += "  document.getElementById('" + models.Const.DOM_REACT_ROOT + "')"
+    appJS += ");"
+    fse.createOutputStream(appPath).write(appJS)
+  }
 
   let sourceDirs: Array<models.SourceDir> = []
 

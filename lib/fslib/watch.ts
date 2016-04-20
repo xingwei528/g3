@@ -1,6 +1,17 @@
+import * as path from 'path'
 import * as chokidar from 'chokidar'
 import * as fslib from './'
 import * as models from '../models'
+
+function syncFile(config: models.Config, p: string) {
+  const ext = path.extname(p)
+  if (ext === '.js' || ext === '.jsx') {
+    const rel = fslib.pathRelative(config.source, p)
+    const g3Path = path.join(config._g3Path, fslib.pathRelative(config.source, p))
+    fslib.write(g3Path, fslib.readFileSync(p))
+    console.log('file changed: ' + rel)
+  }
+}
 
 export function watch (config: models.Config) {
   const watcher = chokidar.watch(config._appPath, {
@@ -12,22 +23,23 @@ export function watch (config: models.Config) {
   .on('ready', () => {
     isReady = true
   })
-  .on('add', (path) => {
+  .on('add', (p) => {
     if (isReady) {
-      console.log(path)
-      //fslib.copySync()
+      syncFile(config, p)
     }
   })
-  .on('addDir', (path) => {
+  .on('addDir', (p) => {
     // dir added
   })
-  .on('change', (path) => {
-    // file changed
+  .on('change', (p) => {
+    if (isReady) {
+      syncFile(config, p)
+    }
   })
-  .on('unlink', (path) => {
+  .on('unlink', (p) => {
     // file removed
   })
-  .on('unlinkDir', (path) => {
+  .on('unlinkDir', (p) => {
     // dir removed
   })
   .on('error', (error) =>  {

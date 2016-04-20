@@ -35,6 +35,7 @@
     "fslib/readFileSync.ts",
     "fslib/removeSync.ts",
     "fslib/watch.ts",
+    "fslib/write.ts",
     "fslib/writeDATA.ts",
     "fslib/writeHTML.ts",
     "models/config.ts",

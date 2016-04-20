@@ -5,20 +5,20 @@ import * as _ from 'lodash'
 var fm = require('front-matter')
 
 import * as models from '../models'
-import {isMarkdown} from './isMarkdown'
-import {removeSync} from './removeSync'
-import {writeHTML} from './writeHTML'
+import * as fslib from './'
 
 export function writeDATA(config: models.Config) {
+  const dataPath = path.join(config.destination, models.Const.DIR_DATA)
+  if (!fslib.isDirectory(dataPath)) return
+
   var dirFiles: {[index: string]: Array<Object>} = {}
-  const dataPath = path.join(config.destination, 'data')
   fse.walk(dataPath).on('readable', function () {
     var item
     while (item = this.read()) {
       const filepath = item.path
       const stats: fse.Stats = fse.lstatSync(filepath)
       if (stats.isFile()) {
-        if (isMarkdown(filepath)) {
+        if (fslib.isMarkdown(filepath)) {
           const content = fm(fse.readFileSync(filepath).toString())
           let filename = path.basename(filepath)
           filename = filename.substr(0, filename.lastIndexOf('.'))
@@ -33,11 +33,11 @@ export function writeDATA(config: models.Config) {
           let arr = dirFiles[dirPath] || []
           arr.push(obj)
           dirFiles[dirPath] = arr
-          removeSync(filepath)
+          fslib.removeSync(filepath)
 
           let routePath = path.relative(dataPath, filepath)
           routePath = routePath.substr(0, routePath.lastIndexOf('.'))
-          writeHTML(config, routePath, '')
+          fslib.writeHTML(config, routePath, '')
         }
       }
     }
