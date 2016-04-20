@@ -1,5 +1,0 @@
-{
-    "path": "/",
-    "layout": "./app",
-    "excludes": ["components"]
-}
