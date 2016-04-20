@@ -7,20 +7,19 @@ var fm = require('front-matter')
 import * as models from '../models'
 import * as fslib from './'
 
-function parseConfig(config: models.Config, sourceDir: models.SourceDir): string {
-  const configJSON = sourceDir.config
+export function parseConfig(config: models.Config, sourceDir: models.SourceDir): string {
   let configJS = ''
   configJS += 'module.exports = {'
-  if (configJSON.path) {
-    configJS += "path: '" + configJSON.path + "',"
-    fslib.writeHTML(config, configJSON.path, '')
+  if (sourceDir.path) {
+    configJS += "path: '" + sourceDir.path + "',"
+    fslib.writeHTML(config, sourceDir.path, '')
   } else {
     configJS += "component: 'div',"
   }
-  if (configJSON.layout) {
+  if (sourceDir.layout) {
     configJS += "getComponent(nextState, cb) {"
     configJS += "    require.ensure([], (require) => {"
-    configJS += "        cb(null, require('" + configJSON.layout + "'));"
+    configJS += "        cb(null, require('" + sourceDir.layout + "'));"
     configJS += "    });"
     configJS += "},"
   }
@@ -35,7 +34,7 @@ function parseConfig(config: models.Config, sourceDir: models.SourceDir): string
     configJS += "    });"
     configJS += "},"
   }
-  let children = sourceDir.config.includes
+  let children = sourceDir.includes
   if (children === undefined) {
     children = sourceDir.dirnames
   }
@@ -55,7 +54,7 @@ function parseConfig(config: models.Config, sourceDir: models.SourceDir): string
   return configJS
 }
 
-export function parse(config: models.Config, callback) {
+export function parse(config: models.Config, callback: (sourceDirs: Array<models.SourceDir>) => void) {
   fslib.copySync(config.source, config._g3Path)
 
   const appPath = path.join(config._g3Path, models.Const.FILE_APP_JSX)
@@ -88,31 +87,38 @@ export function parse(config: models.Config, callback) {
           return s.key === pathParent;
         });
         if (parentSourceDir) {
-          if (parentSourceDir.config.includes) {
-            if (parentSourceDir.config.includes.indexOf(dirname) === -1) {
+          if (parentSourceDir.includes) {
+            if (parentSourceDir.includes.indexOf(dirname) === -1) {
               continue
             }
-          } else if (parentSourceDir.config.excludes) {
-            if (parentSourceDir.config.excludes.indexOf(dirname) !== -1) {
+          } else if (parentSourceDir.excludes) {
+            if (parentSourceDir.excludes.indexOf(dirname) !== -1) {
               continue
             }
           }
           parentSourceDir.dirnames.push(dirname)
         }
 
-        let configJSON: models.ConfigJSON = new models.ConfigJSON()
         if (fslib.isFile(path.join(dirpath, models.Const.FILE_CONFIG_JSON))) {
-          configJSON = JSON.parse(fse.readFileSync(path.join(dirpath, models.Const.FILE_CONFIG_JSON)).toString())
+          let configJSON: models.ConfigJSON = null
+          try {
+            configJSON = JSON.parse(fse.readFileSync(path.join(dirpath, models.Const.FILE_CONFIG_JSON)).toString())
+          } catch(e) {}
+          if (configJSON) {
+            sourceDir.path = configJSON.path
+            sourceDir.layout = configJSON.layout
+            sourceDir.includes = configJSON.includes
+            sourceDir.excludes = configJSON.excludes
+          }
         }
-        if (configJSON.path === undefined) {
+        if (sourceDir.path === undefined) {
           if (parentSourceDir) {
-            configJSON.path = fslib.pathJoin(parentSourceDir.config.path, dirname)
+            sourceDir.path = fslib.pathJoin(parentSourceDir.path, dirname)
           } else {
-            configJSON.path = sourceDir.key
+            sourceDir.path = sourceDir.key
           }
         }
 
-        sourceDir.config = configJSON
         sourceDir.filenames = []
         sourceDir.dirnames = []
         sourceDirs.push(sourceDir)
@@ -128,10 +134,11 @@ export function parse(config: models.Config, callback) {
     }
   }).on('end', function () {
     sourceDirs.forEach((sourceDir: models.SourceDir) => {
-      const ws = fse.createOutputStream(path.join(config._g3Path, sourceDir.key, models.Const.FILE_CONFIG_JS))
-      ws.write(parseConfig(config, sourceDir))
+      const configPath = path.join(config._g3Path, sourceDir.key, models.Const.FILE_CONFIG_JS)
+      const configContent = parseConfig(config, sourceDir)
+      fslib.write(configPath, configContent)
     })
     fslib.writeDATA(config)
-    callback()
+    callback(sourceDirs)
   })
 }

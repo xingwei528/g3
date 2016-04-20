@@ -3,9 +3,7 @@ import * as fs from 'fs'
 import * as fse from 'fs-extra'
 
 import * as models from '../models'
-import {isFile} from './isFile'
-import {isDirectory} from './isDirectory'
-import {readFileSync} from './readFileSync'
+import * as fslib from './'
 
 export function getConfig(appPath: string, command: string): models.Config {
   appPath = path.resolve(appPath)
@@ -29,12 +27,12 @@ export function getConfig(appPath: string, command: string): models.Config {
   config._files = []
   config._directories = []
   fs.readdirSync(config._appPath).forEach((p: string) => {
-    if (isFile(path.join(config._appPath, p))) {
+    if (fslib.isFile(path.join(config._appPath, p))) {
       config._files.push(p)
       if (p === 'index.html') {
-        config._indexContent = readFileSync(path.join(config._appPath, p))
+        config._indexContent = fslib.readFileSync(path.join(config._appPath, p))
       }
-    } else if (isDirectory(path.join(config._appPath, p))) {
+    } else if (fslib.isDirectory(path.join(config._appPath, p))) {
       config._directories.push(p)
     }
   })

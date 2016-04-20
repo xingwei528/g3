@@ -12,8 +12,8 @@ export function run(appPath) {
     return false
   }
 
-  fslib.parse(config, () => {
-    fslib.watch(config)
+  fslib.parse(config, (sourceDirs: Array<models.SourceDir>) => {
+    fslib.watch(config, sourceDirs)
 
     var options = {
       entry: path.join(config._g3Path, models.Const.FILE_APP_JSX),

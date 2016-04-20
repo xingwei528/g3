@@ -8,7 +8,7 @@ import * as models from '../models'
 import * as fslib from './'
 
 
-export function write(p: string, content: string) {
+export function write(p: string, chunk: any) {
   const ws = fse.createOutputStream(p)
-  ws.write(content)
+  ws.write(chunk)
 }

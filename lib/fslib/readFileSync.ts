@@ -8,3 +8,11 @@ export function readFileSync(filepath: string): string {
     return ''
   }
 }
+
+export function readFile(filepath: string, callback: (error: Error, data: NodeBuffer) => void) {
+  try {
+    fse.readFile(filepath, callback)
+  } catch (err) {
+    console.error(err)
+  }
+}
