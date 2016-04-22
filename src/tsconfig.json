@@ -1,0 +1,74 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "declaration": false,
+    "sourceMap": true,
+    "jsx": "preserve",
+    "watch": true,
+    "noImplicitAny": false,
+    "removeComments": true
+  },
+  "filesGlob": [
+    "**/*.ts",
+    "**/*.tsx",
+    "!node_modules/**/*.ts"
+  ],
+  "files": [
+    "bin/index.ts",
+    "commands/build.ts",
+    "commands/index.ts",
+    "commands/run.ts",
+    "commands/serve.ts",
+    "fslib/config/index.ts",
+    "fslib/copy/index.ts",
+    "fslib/copy/test.spec.ts",
+    "fslib/index.ts",
+    "fslib/location/index.ts",
+    "fslib/parse/index.ts",
+    "fslib/read/index.ts",
+    "fslib/remove/index.ts",
+    "fslib/utils/index.ts",
+    "fslib/watch/index.ts",
+    "fslib/write/index.ts",
+    "models/config.ts",
+    "models/configJSON.ts",
+    "models/const.ts",
+    "models/index.ts",
+    "models/sourceDir.ts",
+    "typings/chai/chai.d.ts",
+    "typings/chokidar/chokidar.d.ts",
+    "typings/fs-extra/fs-extra.d.ts",
+    "typings/lodash/lodash.d.ts",
+    "typings/marked/marked.d.ts",
+    "typings/mocha/mocha.d.ts",
+    "typings/node-uuid/node-uuid.d.ts",
+    "typings/node/node.d.ts",
+    "typings/source-map/source-map.d.ts",
+    "typings/uglify-js/uglify-js.d.ts",
+    "typings/webpack/webpack.d.ts"
+  ],
+  "exclude": [
+    "bower_components",
+    "node_modules",
+    "public"
+  ],
+  "formatCodeOptions": {
+    "indentSize": 2,
+    "tabSize": 2,
+    "newLineCharacter": "\r\n",
+    "convertTabsToSpaces": true,
+    "insertSpaceAfterCommaDelimiter": true,
+    "insertSpaceAfterSemicolonInForStatements": true,
+    "insertSpaceBeforeAndAfterBinaryOperators": true,
+    "insertSpaceAfterKeywordsInControlFlowStatements": true,
+    "insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+    "insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
+    "placeOpenBraceOnNewLineForFunctions": false,
+    "placeOpenBraceOnNewLineForControlBlocks": false
+  },
+  "atom": {
+    "rewriteTsconfig": true
+  }
+}
