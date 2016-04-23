@@ -1,6 +1,6 @@
 {
   "name": "g3",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "ReactJS Web Application Generator",
   "author": "Get3W <corp@get3w.com>",
   "bin": {
@@ -11,7 +11,8 @@
     "test-lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
     "test-func": "node_modules/.bin/mocha src/**/*.spec.js",
     "test-integration": "node_modules/.bin/mocha ./src/test/integration",
-    "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test"
+    "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
+    "demo-build": "node ./src/bin/index.js build ./demo"
   },
   "bugs": {
     "url": "https://github.com/get3w/g3/issues"
@@ -55,6 +56,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "devDependencies": {
+    "bluebird": "^3.3.5",
     "chai": "^3.5.0",
     "mocha": "^2.4.5",
     "typescript": "^1.8.7"

@@ -5,7 +5,6 @@ var models = require('../models');
 var fslib = require('../fslib');
 function build(appPath) {
     var config = fslib.getConfig(appPath, 'build');
-    fslib.removeSync(config.destination);
     fslib.copyAppFiles(config);
     if (!fslib.prepareG3(config)) {
         return false;
@@ -58,6 +57,9 @@ function build(appPath) {
         return webpack(options).run(function (error) {
             if (error) {
                 console.log('failed to compile bundle.js');
+            }
+            else {
+                console.log('build successed!');
             }
         });
     });

@@ -35,7 +35,7 @@ function syncFile(config: models.Config, sourceDirs: Array<models.SourceDir>, p:
       console.log(sourceDir)
       if (sourceDir) {
         const configPath = path.join(config._g3Path, sourceDir.key, models.Const.FILE_CONFIG_JS)
-        const configContent = fslib.parseConfig(config, sourceDir)
+        const configContent = fslib.getConfigJSContent(config, sourceDir)
         fslib.write(configPath, configContent)
       }
     }
@@ -44,7 +44,7 @@ function syncFile(config: models.Config, sourceDirs: Array<models.SourceDir>, p:
 
 function syncDir(config: models.Config, sourceDirs: Array<models.SourceDir>, p: string) {
   console.log(p)
-  console.log(fslib.readdirSync(p))
+  fslib.parseDir(config, p, sourceDirs, false)
 }
 
 export function watch (config: models.Config, sourceDirs: Array<models.SourceDir>) {

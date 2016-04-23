@@ -6,7 +6,6 @@ import * as fslib from '../fslib'
 
 export function build(appPath) {
   const config: models.Config = fslib.getConfig(appPath, 'build')
-  fslib.removeSync(config.destination)
   fslib.copyAppFiles(config)
   if (!fslib.prepareG3(config)) {
     return false
@@ -63,6 +62,8 @@ export function build(appPath) {
     return webpack(options).run((error) => {
       if (error) {
         console.log('failed to compile bundle.js')
+      } else {
+        console.log('build successed!')
       }
     })
   })

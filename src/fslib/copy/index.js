@@ -6,7 +6,7 @@ function copySync(src, dest) {
         fse.copySync(src, dest);
     }
     catch (err) {
-        console.error(err);
+        console.log('error: ' + err);
     }
 }
 exports.copySync = copySync;
@@ -15,7 +15,7 @@ function copy(src, dest) {
         fse.copy(src, dest);
     }
     catch (err) {
-        console.error(err);
+        console.log('error: ' + err);
     }
 }
 exports.copy = copy;

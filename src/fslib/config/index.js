@@ -2,8 +2,41 @@
 var path = require('path');
 var fs = require('fs');
 var fse = require('fs-extra');
+var _ = require('lodash');
 var cp = require('child_process');
+var models = require('../../models');
 var fslib = require('../');
+function getConfigJSContent(config, sourceDir) {
+    var configJS = '';
+    configJS += 'module.exports = {';
+    if (sourceDir.path) {
+        configJS += "path: '" + sourceDir.path + "',";
+        fslib.writeHTML(config, sourceDir.path, '');
+    }
+    else {
+        configJS += "component: 'div',";
+    }
+    if (sourceDir.layout) {
+        configJS += "\n    getComponent(nextState, cb) {\n        require.ensure([], (require) => {\n            cb(null, require('" + sourceDir.layout + "'));\n        });\n    },";
+    }
+    if (sourceDir.filenames.indexOf(models.Const.FILE_INDEX_JSX) !== -1) {
+        configJS += "\n    getIndexRoute(location, cb) {\n        cb(null, {\n            getComponent(nextState, cb) {\n                require.ensure([], (require) => {\n                    cb(null, require('./index'));\n                });\n            }\n        });\n    },";
+    }
+    var children = sourceDir.includes;
+    if (children === undefined) {
+        children = sourceDir.dirnames;
+    }
+    if (children.length > 0) {
+        configJS += "\n    getChildRoutes(location, cb) {\n        require.ensure([], (require) => {\n            cb(null, [";
+        configJS += children.map(function (child) {
+            return "\n    require('./" + child + "/config')";
+        }).join(',');
+        configJS += "\n        ]);\n      });\n    }\n    ";
+    }
+    configJS += '}';
+    return configJS;
+}
+exports.getConfigJSContent = getConfigJSContent;
 function prepareG3(config) {
     var packagePath = path.join(config._appPath, 'package.json');
     var gitignorePath = path.join(config._appPath, '.gitignore');
@@ -22,8 +55,10 @@ function prepareG3(config) {
     var pkg = fse.readJsonSync(packagePath);
     _.keysIn(pkg.dependencies).forEach(function (dep) {
         if (!fslib.isDirectory(path.join(config._appPath, 'node_modules', dep))) {
-            console.log('installing npm package ' + dep + '...');
-            cp.execSync('npm install ' + dep);
+            console.log('Installing package ' + dep + '...');
+            cp.execSync('npm install ' + dep, {
+                cwd: config._appPath
+            });
         }
     });
     return true;

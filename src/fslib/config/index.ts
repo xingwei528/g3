@@ -1,10 +1,63 @@
 import * as path from 'path'
 import * as fs from 'fs'
 import * as fse from 'fs-extra'
+import * as _ from 'lodash'
 import * as cp from 'child_process'
 
 import * as models from '../../models'
 import * as fslib from '../'
+
+export function getConfigJSContent(config: models.Config, sourceDir: models.SourceDir): string {
+  let configJS = ''
+  configJS += 'module.exports = {'
+  if (sourceDir.path) {
+    configJS += "path: '" + sourceDir.path + "',"
+    fslib.writeHTML(config, sourceDir.path, '')
+  } else {
+    configJS += "component: 'div',"
+  }
+  if (sourceDir.layout) {
+    configJS += `
+    getComponent(nextState, cb) {
+        require.ensure([], (require) => {
+            cb(null, require('` + sourceDir.layout + `'));
+        });
+    },`
+  }
+  if (sourceDir.filenames.indexOf(models.Const.FILE_INDEX_JSX) !== -1) {
+    configJS += `
+    getIndexRoute(location, cb) {
+        cb(null, {
+            getComponent(nextState, cb) {
+                require.ensure([], (require) => {
+                    cb(null, require('./index'));
+                });
+            }
+        });
+    },`
+  }
+  let children = sourceDir.includes
+  if (children === undefined) {
+    children = sourceDir.dirnames
+  }
+  if (children.length > 0) {
+    configJS += `
+    getChildRoutes(location, cb) {
+        require.ensure([], (require) => {
+            cb(null, [`
+    configJS += children.map((child: string) => {
+      return "\n    require('./" + child + "/config')"
+    }).join(',')
+    configJS += `
+        ]);
+      });
+    }
+    `
+  }
+  configJS += '}'
+
+  return configJS
+}
 
 export function prepareG3(config: models.Config): boolean {
   const packagePath = path.join(config._appPath, 'package.json')
@@ -24,8 +77,10 @@ export function prepareG3(config: models.Config): boolean {
   const pkg = fse.readJsonSync(packagePath)
   _.keysIn(pkg.dependencies).forEach((dep: string) => {
     if (!fslib.isDirectory(path.join(config._appPath, 'node_modules', dep))) {
-      console.log('installing npm package ' + dep + '...')
-      cp.execSync('npm install ' + dep)
+      console.log('Installing package ' + dep + '...')
+      cp.execSync('npm install ' + dep, {
+        cwd: config._appPath
+      })
     }
   })
 

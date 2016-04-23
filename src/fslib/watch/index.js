@@ -36,7 +36,7 @@ function syncFile(config, sourceDirs, p) {
             console.log(sourceDir);
             if (sourceDir) {
                 var configPath = path.join(config._g3Path, sourceDir.key, models.Const.FILE_CONFIG_JS);
-                var configContent = fslib.parseConfig(config, sourceDir);
+                var configContent = fslib.getConfigJSContent(config, sourceDir);
                 fslib.write(configPath, configContent);
             }
         }
@@ -44,7 +44,7 @@ function syncFile(config, sourceDirs, p) {
 }
 function syncDir(config, sourceDirs, p) {
     console.log(p);
-    console.log(fslib.readdirSync(p));
+    fslib.parseDir(config, p, sourceDirs, false);
 }
 function watch(config, sourceDirs) {
     var watcher = chokidar.watch(config._appPath, {

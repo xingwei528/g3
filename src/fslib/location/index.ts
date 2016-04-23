@@ -17,8 +17,26 @@ export function pathJoin(...paths: string[]): string {
   return '/' + _.trim(path.join(...paths).toLowerCase().replace(/\\/g,'/'), '/')
 }
 
-export function readdirSync(dirpath: string): string[] {
-  return fse.readdirSync(dirpath)
+export function listSync(dirpath: string): {
+  dirnames: Array<string>
+  filenames: Array<string>
+} {
+  let dirnames: Array<string> = []
+  let filenames: Array<string> = []
+
+  const arr: string[] = fse.readdirSync(dirpath) || []
+  arr.forEach((name: string) => {
+    var p = path.join(dirpath, name)
+    if (fse.statSync(p).isDirectory()){
+        dirnames.push(name)
+    } else {
+        filenames.push(name)
+    }
+  })
+  return {
+    dirnames: dirnames,
+    filenames: filenames
+  }
 }
 
 export function getPrefix(): string {

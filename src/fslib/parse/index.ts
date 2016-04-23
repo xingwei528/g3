@@ -6,57 +6,61 @@ import * as marked from 'marked'
 import * as models from '../../models'
 import * as fslib from '../'
 
-export function parseConfig(config: models.Config, sourceDir: models.SourceDir): string {
-  let configJS = ''
-  console.log('ss')
-  configJS += 'module.exports = {'
-  if (sourceDir.path) {
-    configJS += "path: '" + sourceDir.path + "',"
-    fslib.writeHTML(config, sourceDir.path, '')
-  } else {
-    configJS += "component: 'div',"
-  }
-  if (sourceDir.layout) {
-    configJS += `
-    getComponent(nextState, cb) {
-        require.ensure([], (require) => {
-            cb(null, require('` + sourceDir.layout + `'));
-        });
-    },`
-  }
-  if (sourceDir.filenames.indexOf(models.Const.FILE_INDEX_JSX) !== -1) {
-    configJS += `
-    getIndexRoute(location, cb) {
-        cb(null, {
-            getComponent(nextState, cb) {
-                require.ensure([], (require) => {
-                    cb(null, require('./index'));
-                });
-            }
-        });
-    },`
-  }
-  let children = sourceDir.includes
-  if (children === undefined) {
-    children = sourceDir.dirnames
-  }
-  if (children.length > 0) {
-    configJS += `
-    getChildRoutes(location, cb) {
-        require.ensure([], (require) => {
-            cb(null, [`
-    configJS += children.map((child: string) => {
-      return "\n    require('./" + child + "/config')"
-    }).join(',')
-    configJS += `
-        ]);
-      });
-    }
-    `
-  }
-  configJS += '}'
+export function parseDir(config: models.Config, dirpath: string, sourceDirs: Array<models.SourceDir>, isRecursive: boolean) {
+  const list = fslib.listSync(dirpath)
+  const dirname = path.basename(dirpath).toLowerCase()
 
-  return configJS
+  const sourceDir = new models.SourceDir()
+  sourceDir.key = fslib.pathRelative(config.source, dirpath)
+  const pathParent = fslib.pathParent(sourceDir.key)
+  let parentSourceDir: models.SourceDir = null
+  parentSourceDir = _.find(sourceDirs, (s: models.SourceDir) => {
+    return s.key === pathParent;
+  });
+  if (parentSourceDir) {
+    if (parentSourceDir.includes) {
+      if (parentSourceDir.includes.indexOf(dirname) === -1) {
+        return
+      }
+    } else if (parentSourceDir.excludes) {
+      if (parentSourceDir.excludes.indexOf(dirname) !== -1) {
+        return
+      }
+    }
+  }
+
+  if (fslib.isFile(path.join(dirpath, models.Const.FILE_CONFIG_JSON))) {
+    let configJSON: models.ConfigJSON = null
+    try {
+      configJSON = JSON.parse(fse.readFileSync(path.join(dirpath, models.Const.FILE_CONFIG_JSON)).toString())
+    } catch(e) {
+      console.log(e)
+    }
+    if (configJSON) {
+      sourceDir.path = configJSON.path
+      sourceDir.layout = configJSON.layout
+      sourceDir.includes = configJSON.includes
+      sourceDir.excludes = configJSON.excludes
+    }
+  }
+  if (sourceDir.path === undefined) {
+    if (parentSourceDir) {
+      sourceDir.path = fslib.pathJoin(parentSourceDir.path, dirname)
+    } else {
+      sourceDir.path = sourceDir.key
+    }
+  }
+
+  sourceDir.filenames = list.filenames
+  sourceDir.dirnames = list.dirnames
+  sourceDirs.push(sourceDir)
+
+  if (isRecursive && list.dirnames && list.dirnames.length > 0) {
+    list.dirnames.forEach((dirname: string) => {
+      const childpath = path.join(dirpath, dirname)
+      parseDir(config, childpath, sourceDirs, isRecursive)
+    })
+  }
 }
 
 export function parse(config: models.Config, callback: (sourceDirs: Array<models.SourceDir>) => void) {
@@ -78,75 +82,85 @@ export function parse(config: models.Config, callback: (sourceDirs: Array<models
 
   let sourceDirs: Array<models.SourceDir> = []
 
-  fse.walk(config.source).on('readable', function () {
-    var item
-    while (item = this.read()) {
-      const filepath = item.path
-      if (fslib.isDirectory(filepath)) {
-        const dirpath = filepath
-        const dirname = path.basename(dirpath).toLowerCase()
-        const sourceDir = new models.SourceDir()
-        sourceDir.key = fslib.pathRelative(config.source, dirpath)
-        const pathParent = fslib.pathParent(sourceDir.key)
-        let parentSourceDir: models.SourceDir = null
-        parentSourceDir = _.find(sourceDirs, (s: models.SourceDir) => {
-          return s.key === pathParent;
-        });
-        if (parentSourceDir) {
-          if (parentSourceDir.includes) {
-            if (parentSourceDir.includes.indexOf(dirname) === -1) {
-              continue
-            }
-          } else if (parentSourceDir.excludes) {
-            if (parentSourceDir.excludes.indexOf(dirname) !== -1) {
-              continue
-            }
-          }
-          parentSourceDir.dirnames.push(dirname)
-        }
+  parseDir(config, config.source, sourceDirs, true)
 
-        if (fslib.isFile(path.join(dirpath, models.Const.FILE_CONFIG_JSON))) {
-          let configJSON: models.ConfigJSON = null
-          try {
-            configJSON = JSON.parse(fse.readFileSync(path.join(dirpath, models.Const.FILE_CONFIG_JSON)).toString())
-          } catch(e) {
-            console.log(e)
-          }
-          if (configJSON) {
-            sourceDir.path = configJSON.path
-            sourceDir.layout = configJSON.layout
-            sourceDir.includes = configJSON.includes
-            sourceDir.excludes = configJSON.excludes
-          }
-        }
-        if (sourceDir.path === undefined) {
-          if (parentSourceDir) {
-            sourceDir.path = fslib.pathJoin(parentSourceDir.path, dirname)
-          } else {
-            sourceDir.path = sourceDir.key
-          }
-        }
-
-        sourceDir.filenames = []
-        sourceDir.dirnames = []
-        sourceDirs.push(sourceDir)
-      } else if (fslib.isFile(filepath)) {
-        const key = fslib.pathRelative(config.source, path.dirname(filepath))
-        const theSourceDir: models.SourceDir = _.find(sourceDirs, (s: models.SourceDir) => {
-          return s.key === key;
-        });
-        if (theSourceDir) {
-          theSourceDir.filenames.push(path.basename(filepath).toLowerCase())
-        }
-      }
-    }
-  }).on('end', function () {
-    sourceDirs.forEach((sourceDir: models.SourceDir) => {
-      const configPath = path.join(config._g3Path, sourceDir.key, models.Const.FILE_CONFIG_JS)
-      const configContent = parseConfig(config, sourceDir)
-      fslib.write(configPath, configContent)
-    })
-    fslib.writeDATA(config)
-    callback(sourceDirs)
+  sourceDirs.forEach((sourceDir: models.SourceDir) => {
+    const configPath = path.join(config._g3Path, sourceDir.key, models.Const.FILE_CONFIG_JS)
+    const configContent = fslib.getConfigJSContent(config, sourceDir)
+    fslib.write(configPath, configContent)
   })
+  fslib.writeDATA(config)
+  callback(sourceDirs)
+
+  // fse.walk(config.source).on('readable', function () {
+  //   var item
+  //   while (item = this.read()) {
+  //     const filepath = item.path
+  //     if (fslib.isDirectory(filepath)) {
+  //       const dirpath = filepath
+  //       const dirname = path.basename(dirpath).toLowerCase()
+  //       const sourceDir = new models.SourceDir()
+  //       sourceDir.key = fslib.pathRelative(config.source, dirpath)
+  //       const pathParent = fslib.pathParent(sourceDir.key)
+  //       let parentSourceDir: models.SourceDir = null
+  //       parentSourceDir = _.find(sourceDirs, (s: models.SourceDir) => {
+  //         return s.key === pathParent;
+  //       });
+  //       if (parentSourceDir) {
+  //         if (parentSourceDir.includes) {
+  //           if (parentSourceDir.includes.indexOf(dirname) === -1) {
+  //             continue
+  //           }
+  //         } else if (parentSourceDir.excludes) {
+  //           if (parentSourceDir.excludes.indexOf(dirname) !== -1) {
+  //             continue
+  //           }
+  //         }
+  //         parentSourceDir.dirnames.push(dirname)
+  //       }
+  //
+  //       if (fslib.isFile(path.join(dirpath, models.Const.FILE_CONFIG_JSON))) {
+  //         let configJSON: models.ConfigJSON = null
+  //         try {
+  //           configJSON = JSON.parse(fse.readFileSync(path.join(dirpath, models.Const.FILE_CONFIG_JSON)).toString())
+  //         } catch(e) {
+  //           console.log(e)
+  //         }
+  //         if (configJSON) {
+  //           sourceDir.path = configJSON.path
+  //           sourceDir.layout = configJSON.layout
+  //           sourceDir.includes = configJSON.includes
+  //           sourceDir.excludes = configJSON.excludes
+  //         }
+  //       }
+  //       if (sourceDir.path === undefined) {
+  //         if (parentSourceDir) {
+  //           sourceDir.path = fslib.pathJoin(parentSourceDir.path, dirname)
+  //         } else {
+  //           sourceDir.path = sourceDir.key
+  //         }
+  //       }
+  //
+  //       sourceDir.filenames = []
+  //       sourceDir.dirnames = []
+  //       sourceDirs.push(sourceDir)
+  //     } else if (fslib.isFile(filepath)) {
+  //       const key = fslib.pathRelative(config.source, path.dirname(filepath))
+  //       const theSourceDir: models.SourceDir = _.find(sourceDirs, (s: models.SourceDir) => {
+  //         return s.key === key;
+  //       });
+  //       if (theSourceDir) {
+  //         theSourceDir.filenames.push(path.basename(filepath).toLowerCase())
+  //       }
+  //     }
+  //   }
+  // }).on('end', function () {
+  //   sourceDirs.forEach((sourceDir: models.SourceDir) => {
+  //     const configPath = path.join(config._g3Path, sourceDir.key, models.Const.FILE_CONFIG_JS)
+  //     const configContent = fslib.getConfigJSContent(config, sourceDir)
+  //     fslib.write(configPath, configContent)
+  //   })
+  //   fslib.writeDATA(config)
+  //   callback(sourceDirs)
+  // })
 }

@@ -18,10 +18,25 @@ function pathJoin() {
     return '/' + _.trim(path.join.apply(path, paths).toLowerCase().replace(/\\/g, '/'), '/');
 }
 exports.pathJoin = pathJoin;
-function readdirSync(dirpath) {
-    return fse.readdirSync(dirpath);
+function listSync(dirpath) {
+    var dirnames = [];
+    var filenames = [];
+    var arr = fse.readdirSync(dirpath) || [];
+    arr.forEach(function (name) {
+        var p = path.join(dirpath, name);
+        if (fse.statSync(p).isDirectory()) {
+            dirnames.push(name);
+        }
+        else {
+            filenames.push(name);
+        }
+    });
+    return {
+        dirnames: dirnames,
+        filenames: filenames
+    };
 }
-exports.readdirSync = readdirSync;
+exports.listSync = listSync;
 function getPrefix() {
     var prefix;
     if (process && process.platform === 'win32') {
