@@ -1,2 +1,2 @@
-A simple and powerful ReactJS web application generator
+A ReactJS static site generator
 =================

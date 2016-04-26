@@ -1,7 +1,7 @@
 {
   "name": "g3",
-  "version": "0.2.3",
-  "description": "ReactJS Web Application Generator",
+  "version": "0.2.4",
+  "description": "ReactJS Static Site Generator",
   "author": "Get3W <corp@get3w.com>",
   "bin": {
     "g3": "./src/bin/index.js"
