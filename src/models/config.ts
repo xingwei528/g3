@@ -9,4 +9,5 @@ export class Config {
   source: string
   destination: string
   history: string
+  port: number
 }

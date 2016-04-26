@@ -4,7 +4,7 @@ var _ = require('lodash');
 var fse = require('fs-extra');
 var models = require('../../models');
 var fslib = require('../');
-function parseDir(config, dirpath, sourceDirs, isRecursive) {
+function getSourceDirs(config, dirpath, sourceDirs, isRecursive) {
     var list = fslib.listSync(dirpath);
     var dirname = path.basename(dirpath).toLowerCase();
     var sourceDir = new models.SourceDir();
@@ -47,6 +47,14 @@ function parseDir(config, dirpath, sourceDirs, isRecursive) {
     }
     sourceDir.filenames = list.filenames;
     sourceDir.dirnames = list.dirnames;
+    if (sourceDir.layout === undefined
+        && (list.filenames.indexOf(models.Const.FILE_LAYOUT + '.jsx') !== -1
+            || list.filenames.indexOf(models.Const.FILE_LAYOUT + '.html') !== -1)) {
+        sourceDir.layout = './' + models.Const.FILE_LAYOUT + '.jsx';
+    }
+    if (sourceDir.excludes === undefined && list.dirnames.indexOf(models.Const.DIR_COMPONENTS) !== -1) {
+        sourceDir.excludes = [models.Const.DIR_COMPONENTS];
+    }
     sourceDirs.push(sourceDir);
     if (isRecursive && list.dirnames && list.dirnames.length > 0) {
         list.dirnames.forEach(function (dirname) {
@@ -55,9 +63,9 @@ function parseDir(config, dirpath, sourceDirs, isRecursive) {
             if (sourceDir.excludes && sourceDir.excludes.indexOf(dirname.toLowerCase()) !== -1)
                 return;
             var childpath = path.join(dirpath, dirname);
-            parseDir(config, childpath, sourceDirs, isRecursive);
+            getSourceDirs(config, childpath, sourceDirs, isRecursive);
         });
     }
 }
-exports.parseDir = parseDir;
-//# sourceMappingURL=parseDir.js.map
+exports.getSourceDirs = getSourceDirs;
+//# sourceMappingURL=getSourceDirs.js.map

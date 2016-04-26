@@ -48,10 +48,12 @@ function syncFile(config: models.Config, sourceDirs: Array<models.SourceDir>, p:
 
 function syncDir(config: models.Config, sourceDirs: Array<models.SourceDir>, p: string) {
   console.log(p)
-  fslib.parseDir(config, p, sourceDirs, false)
+  fslib.getSourceDirs(config, p, sourceDirs, false)
 }
 
 export function watch (config: models.Config, sourceDirs: Array<models.SourceDir>) {
+  if (!sourceDirs || sourceDirs.length === 0) return
+
   const watcher = chokidar.watch(config._appPath, {
     ignored: /\.git|node_modules|bower_components|\.sass\-cache|[\/\\]\./
   })

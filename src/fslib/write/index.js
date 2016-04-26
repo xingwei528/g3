@@ -15,7 +15,7 @@ function writeHTML(config, routePath, content) {
         return;
     var filepath = path.join(config.destination, routePath, "index.html");
     var scripts = config._command === 'run' ? '<script src="/webpack-dev-server.js"></script><script src="/bundle.js"></script>' : '<script src="/assets/js/bundle.js"></script>';
-    var html = config._indexContent.replace('<div id="react-root"></div>', '<div id="react-root">' + content + '</div>' + scripts);
+    var html = config._indexContent.replace('<div id="' + models.Const.DOM_REACT_ROOT + '"></div>', '<div id="' + models.Const.DOM_REACT_ROOT + '">' + content + '</div>' + scripts);
     write(filepath, html);
 }
 exports.writeHTML = writeHTML;

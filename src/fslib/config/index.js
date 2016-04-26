@@ -4,5 +4,6 @@ function __export(m) {
 }
 __export(require('./getConfig'));
 __export(require('./getConfigJSContent'));
+__export(require('./getSourceDirs'));
 __export(require('./prepareG3'));
 //# sourceMappingURL=index.js.map

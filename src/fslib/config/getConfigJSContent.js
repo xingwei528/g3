@@ -14,7 +14,8 @@ function getConfigJSContent(config, sourceDir) {
     if (sourceDir.layout) {
         configJS += "\n    getComponent(nextState, cb) {\n        require.ensure([], (require) => {\n            cb(null, require('" + sourceDir.layout + "'));\n        });\n    },";
     }
-    if (sourceDir.filenames.indexOf(models.Const.FILE_INDEX_JSX) !== -1) {
+    if (sourceDir.filenames.indexOf(models.Const.FILE_INDEX + '.jsx') !== -1
+        || sourceDir.filenames.indexOf(models.Const.FILE_INDEX + '.html') !== -1) {
         configJS += "\n    getIndexRoute(location, cb) {\n        cb(null, {\n            getComponent(nextState, cb) {\n                require.ensure([], (require) => {\n                    cb(null, require('./index'));\n                });\n            }\n        });\n    },";
     }
     var children = [];

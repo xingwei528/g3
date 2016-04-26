@@ -6,11 +6,15 @@ import * as marked from 'marked'
 import * as models from '../../models'
 import * as fslib from '../'
 
-export function parse(config: models.Config, callback: (sourceDirs: Array<models.SourceDir>) => void) {
+export function parse(config: models.Config): Array<models.SourceDir> {
+  let sourceDirs: Array<models.SourceDir> = []
+
+  if (!fslib.isDirectory(config.source)) return sourceDirs
+  if (!fslib.prepareG3(config)) return sourceDirs
+
   fslib.copySync(config.source, config._g3Path)
 
-  const appPath = path.join(config._g3Path, models.Const.FILE_APP_JSX)
-  if (!fslib.isFile(appPath)) {
+  if (!fslib.isFile(path.join(config._g3Path, models.Const.FILE_APP) + '.jsx') && !fslib.isFile(path.join(config._g3Path, models.Const.FILE_APP) + '.html')) {
     let appJS = `const React = require('react');
     const ReactDOM = require('react-dom');
     const router = require('react-router');
@@ -20,90 +24,26 @@ export function parse(config: models.Config, callback: (sourceDirs: Array<models
       document.getElementById('` + models.Const.DOM_REACT_ROOT + `')
     );`
 
-    fslib.write(appPath, appJS)
+    fslib.write(path.join(config._g3Path, models.Const.FILE_APP + '.jsx'), appJS)
   }
 
-  let sourceDirs: Array<models.SourceDir> = []
-
-  fslib.parseDir(config, config.source, sourceDirs, true)
+  fslib.getSourceDirs(config, config.source, sourceDirs, true)
 
   sourceDirs.forEach((sourceDir: models.SourceDir) => {
     const configPath = path.join(config._g3Path, sourceDir.key, models.Const.FILE_CONFIG_JS)
     const configContent = fslib.getConfigJSContent(config, sourceDir)
     fslib.write(configPath, configContent)
+
+    sourceDir.filenames.forEach((filename: string) => {
+      if (path.extname(filename) === '.html') {
+        const htmlPath = path.join(config._g3Path, sourceDir.key, filename)
+        const jsxPath = path.join(config._g3Path, sourceDir.key, filename.substring(0, filename.lastIndexOf('.')) + '.jsx')
+        const html = fslib.readFileSync(htmlPath)
+        const jsx = fslib.createReactComponent(html)
+        fslib.write(jsxPath, jsx)
+      }
+    })
   })
   fslib.writeDATA(config)
-  callback(sourceDirs)
-
-  // fse.walk(config.source).on('readable', function () {
-  //   var item
-  //   while (item = this.read()) {
-  //     const filepath = item.path
-  //     if (fslib.isDirectory(filepath)) {
-  //       const dirpath = filepath
-  //       const dirname = path.basename(dirpath).toLowerCase()
-  //       const sourceDir = new models.SourceDir()
-  //       sourceDir.key = fslib.pathRelative(config.source, dirpath)
-  //       const pathParent = fslib.pathParent(sourceDir.key)
-  //       let parentSourceDir: models.SourceDir = null
-  //       parentSourceDir = _.find(sourceDirs, (s: models.SourceDir) => {
-  //         return s.key === pathParent;
-  //       });
-  //       if (parentSourceDir) {
-  //         if (parentSourceDir.includes) {
-  //           if (parentSourceDir.includes.indexOf(dirname) === -1) {
-  //             continue
-  //           }
-  //         } else if (parentSourceDir.excludes) {
-  //           if (parentSourceDir.excludes.indexOf(dirname) !== -1) {
-  //             continue
-  //           }
-  //         }
-  //         parentSourceDir.dirnames.push(dirname)
-  //       }
-  //
-  //       if (fslib.isFile(path.join(dirpath, models.Const.FILE_CONFIG_JSON))) {
-  //         let configJSON: models.ConfigJSON = null
-  //         try {
-  //           configJSON = JSON.parse(fse.readFileSync(path.join(dirpath, models.Const.FILE_CONFIG_JSON)).toString())
-  //         } catch(e) {
-  //           console.log(e)
-  //         }
-  //         if (configJSON) {
-  //           sourceDir.path = configJSON.path
-  //           sourceDir.layout = configJSON.layout
-  //           sourceDir.includes = configJSON.includes
-  //           sourceDir.excludes = configJSON.excludes
-  //         }
-  //       }
-  //       if (sourceDir.path === undefined) {
-  //         if (parentSourceDir) {
-  //           sourceDir.path = fslib.pathJoin(parentSourceDir.path, dirname)
-  //         } else {
-  //           sourceDir.path = sourceDir.key
-  //         }
-  //       }
-  //
-  //       sourceDir.filenames = []
-  //       sourceDir.dirnames = []
-  //       sourceDirs.push(sourceDir)
-  //     } else if (fslib.isFile(filepath)) {
-  //       const key = fslib.pathRelative(config.source, path.dirname(filepath))
-  //       const theSourceDir: models.SourceDir = _.find(sourceDirs, (s: models.SourceDir) => {
-  //         return s.key === key;
-  //       });
-  //       if (theSourceDir) {
-  //         theSourceDir.filenames.push(path.basename(filepath).toLowerCase())
-  //       }
-  //     }
-  //   }
-  // }).on('end', function () {
-  //   sourceDirs.forEach((sourceDir: models.SourceDir) => {
-  //     const configPath = path.join(config._g3Path, sourceDir.key, models.Const.FILE_CONFIG_JS)
-  //     const configContent = fslib.getConfigJSContent(config, sourceDir)
-  //     fslib.write(configPath, configContent)
-  //   })
-  //   fslib.writeDATA(config)
-  //   callback(sourceDirs)
-  // })
+  return sourceDirs
 }

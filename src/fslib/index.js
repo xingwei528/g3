@@ -4,6 +4,7 @@ function __export(m) {
 }
 __export(require('./config'));
 __export(require('./copy'));
+__export(require('./jsx'));
 __export(require('./location'));
 __export(require('./parse'));
 __export(require('./read'));

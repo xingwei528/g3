@@ -15,7 +15,7 @@ export function writeHTML(config: models.Config, routePath: string, content: str
   if (routePath.indexOf('*') !== -1 || routePath.indexOf(':') !== -1) return
   const filepath = path.join(config.destination, routePath, "index.html")
   const scripts = config._command === 'run' ? '<script src="/webpack-dev-server.js"></script><script src="/bundle.js"></script>' : '<script src="/assets/js/bundle.js"></script>'
-  let html = config._indexContent.replace('<div id="react-root"></div>', '<div id="react-root">' + content + '</div>' + scripts)
+  let html = config._indexContent.replace('<div id="' + models.Const.DOM_REACT_ROOT + '"></div>', '<div id="' + models.Const.DOM_REACT_ROOT + '">' + content + '</div>' + scripts)
   write(filepath, html)
 }
 

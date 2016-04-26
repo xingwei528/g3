@@ -50,9 +50,11 @@ function syncFile(config, sourceDirs, p) {
 }
 function syncDir(config, sourceDirs, p) {
     console.log(p);
-    fslib.parseDir(config, p, sourceDirs, false);
+    fslib.getSourceDirs(config, p, sourceDirs, false);
 }
 function watch(config, sourceDirs) {
+    if (!sourceDirs || sourceDirs.length === 0)
+        return;
     var watcher = chokidar.watch(config._appPath, {
         ignored: /\.git|node_modules|bower_components|\.sass\-cache|[\/\\]\./
     });

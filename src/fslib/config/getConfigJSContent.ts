@@ -18,7 +18,8 @@ export function getConfigJSContent(config: models.Config, sourceDir: models.Sour
         });
     },`
   }
-  if (sourceDir.filenames.indexOf(models.Const.FILE_INDEX_JSX) !== -1) {
+  if (sourceDir.filenames.indexOf(models.Const.FILE_INDEX + '.jsx') !== -1
+    || sourceDir.filenames.indexOf(models.Const.FILE_INDEX + '.html') !== -1) {
     configJS += `
     getIndexRoute(location, cb) {
         cb(null, {
