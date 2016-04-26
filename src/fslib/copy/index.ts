@@ -4,19 +4,11 @@ import * as fse from 'fs-extra'
 import * as models from '../../models'
 
 export function copySync(src: string, dest: string) {
-  try {
-    fse.copySync(src, dest)
-  } catch (err) {
-    console.log('error: ' + err)
-  }
+  fse.copySync(src, dest)
 }
 
-export function copy(src: string, dest: string) {
-  try {
-    fse.copy(src, dest)
-  } catch (err) {
-    console.log('error: ' + err)
-  }
+export function copy(src: string, dest: string, callback?: (err: Error) => void) {
+  fse.copy(src, dest, callback)
 }
 
 export function copyAppFiles(config: models.Config) {
