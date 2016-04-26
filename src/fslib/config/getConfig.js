@@ -1,10 +1,19 @@
 "use strict";
 var path = require('path');
 var fse = require('fs-extra');
+var models = require('../../models');
 var fslib = require('../');
 function getConfig(appPath, command) {
     appPath = path.resolve(appPath);
-    var config = JSON.parse(fse.readFileSync(path.join(appPath, 'g3.json')).toString());
+    var config = null;
+    if (fslib.isFile(path.join(appPath, models.Const.FILE_CONFIG_G3))) {
+        try {
+            config = JSON.parse(fse.readFileSync(path.join(appPath, models.Const.FILE_CONFIG_G3)).toString());
+        }
+        catch (e) { }
+    }
+    if (!config)
+        config = new models.Config();
     config._appPath = appPath;
     config._g3Path = path.join(appPath, '.g3');
     config._command = command;

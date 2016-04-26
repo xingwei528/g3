@@ -3,7 +3,6 @@ var path = require('path');
 var _ = require('lodash');
 var fse = require('fs-extra');
 var marked = require('marked');
-var fm = require('front-matter');
 var models = require('../../models');
 var fslib = require('../');
 function write(p, chunk) {
@@ -32,7 +31,7 @@ function writeDATA(config) {
             var stats = fse.lstatSync(filepath);
             if (stats.isFile()) {
                 if (fslib.isMarkdown(filepath)) {
-                    var content = fm(fse.readFileSync(filepath).toString());
+                    var content = fslib.readMarkdown(filepath);
                     var filename = path.basename(filepath);
                     filename = filename.substr(0, filename.lastIndexOf('.'));
                     var obj = _.assign({}, content.attributes, {

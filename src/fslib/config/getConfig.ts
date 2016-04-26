@@ -7,7 +7,14 @@ import * as fslib from '../'
 
 export function getConfig(appPath: string, command: string): models.Config {
   appPath = path.resolve(appPath)
-  const config: models.Config = JSON.parse(fse.readFileSync(path.join(appPath, 'g3.json')).toString())
+
+  let config: models.Config = null
+  if (fslib.isFile(path.join(appPath, models.Const.FILE_CONFIG_G3))) {
+    try{
+      config = JSON.parse(fse.readFileSync(path.join(appPath, models.Const.FILE_CONFIG_G3)).toString())
+    } catch(e) {}
+  }
+  if (!config) config = new models.Config()
   config._appPath = appPath
   config._g3Path = path.join(appPath, '.g3')
   config._command = command

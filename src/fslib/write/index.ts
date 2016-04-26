@@ -2,7 +2,6 @@ import * as path from 'path'
 import * as _ from 'lodash'
 import * as fse from 'fs-extra'
 import * as marked from 'marked'
-var fm = require('front-matter')
 
 import * as models from '../../models'
 import * as fslib from '../'
@@ -32,7 +31,7 @@ export function writeDATA(config: models.Config) {
       const stats: fse.Stats = fse.lstatSync(filepath)
       if (stats.isFile()) {
         if (fslib.isMarkdown(filepath)) {
-          const content = fm(fse.readFileSync(filepath).toString())
+          const content = fslib.readMarkdown(filepath)
           let filename = path.basename(filepath)
           filename = filename.substr(0, filename.lastIndexOf('.'))
           const obj = _.assign({}, content.attributes, {
