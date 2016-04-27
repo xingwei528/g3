@@ -12,7 +12,7 @@
     "test-func": "node_modules/.bin/mocha src/**/*.spec.js",
     "test-integration": "node_modules/.bin/mocha ./src/test/integration",
     "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
-    "demo-build": "node ./src/bin/index.js build ./demo"
+    "fix-build": "node ./src/bin/index.js build ./fix/en"
   },
   "bugs": {
     "url": "https://github.com/get3w/g3/issues"
