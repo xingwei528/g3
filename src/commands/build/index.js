@@ -2,20 +2,20 @@
 var path = require('path');
 var webpack = require('webpack');
 var models = require('../../models');
-var fslib = require('../../fslib');
+var lib = require('../../lib');
 function build(appPath) {
-    var config = fslib.getConfig(appPath, 'build');
-    fslib.copyAppFiles(config);
-    var sourceDirs = fslib.parse(config);
+    var g3Config = lib.getG3Config(appPath, 'build');
+    lib.copyAppFiles(g3Config);
+    var sourceDirs = lib.parse(g3Config);
     if (!sourceDirs || sourceDirs.length === 0)
         return;
     var options = {
-        entry: path.join(config._g3Path, '/' + models.Const.FILE_APP + '.jsx'),
+        entry: path.join(g3Config._g3Path, '/' + models.Const.FILE_APP + '.jsx'),
         'process.env.NODE_ENV': '"production"',
         errorDetails: false,
         debug: false,
         output: {
-            path: path.join(config.destination, './assets/js'),
+            path: path.join(g3Config.destination, './assets/js'),
             publicPath: "/assets/js/",
             filename: "bundle.js"
         },

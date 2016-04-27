@@ -3,22 +3,22 @@ import * as _ from 'lodash'
 import * as webpack from 'webpack'
 const WebpackDevServer = require("webpack-dev-server")
 import * as models from '../../models'
-import * as fslib from '../../fslib'
+import * as lib from '../../lib'
 import * as commands from '../'
 
 export function run(appPath) {
-  const config: models.Config = fslib.getConfig(appPath, 'run')
-  fslib.copyAppFiles(config)
+  const g3Config: models.G3Config = lib.getG3Config(appPath, 'run')
+  lib.copyAppFiles(g3Config)
 
-  const sourceDirs: Array<models.SourceDir> = fslib.parse(config)
+  const sourceDirs: Array<models.SourceDir> = lib.parse(g3Config)
   if (!sourceDirs || sourceDirs.length === 0) return commands.serve(appPath)
 
-  fslib.watch(config, sourceDirs)
+  lib.watch(g3Config, sourceDirs)
 
   var options = {
-    entry: path.join(config._g3Path, models.Const.FILE_APP + '.jsx'),
+    entry: path.join(g3Config._g3Path, models.Const.FILE_APP + '.jsx'),
     output: {
-      path: path.join(config._g3Path, './assets/js'),
+      path: path.join(g3Config._g3Path, './assets/js'),
       publicPath: "/",
       filename: "bundle.js"
     },
@@ -43,7 +43,7 @@ export function run(appPath) {
     devtool: "sourcemap",
     debug: true
   }
-  var port = config.port || 9393
+  var port = g3Config.port || 9393
 
   var compiler = webpack(options)
   return new WebpackDevServer(compiler, {

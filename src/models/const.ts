@@ -1,11 +1,14 @@
 export class Const {
+  static DIR_DOT_G3 = '.g3'
+  static DIR_SRC = 'src'
+  static DIR_PUBLIC = 'public'
   static DIR_DATA = 'data'
   static DIR_COMPONENTS = 'components'
 
-  static FILE_CONFIG_G3 = 'g3.json'
-  static FILE_CONFIG_JSON = 'config.json'
+  static FILE_G3_YML = 'g3.yml'
+  static FILE_CONFIG_YML = 'config.yml'
   static FILE_CONFIG_JS = 'config.js'
-  
+
   static FILE_APP = 'app'
   static FILE_INDEX = 'index'
   static FILE_LAYOUT = 'layout'

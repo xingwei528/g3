@@ -3,19 +3,19 @@ var path = require('path');
 var webpack = require('webpack');
 var WebpackDevServer = require("webpack-dev-server");
 var models = require('../../models');
-var fslib = require('../../fslib');
+var lib = require('../../lib');
 var commands = require('../');
 function run(appPath) {
-    var config = fslib.getConfig(appPath, 'run');
-    fslib.copyAppFiles(config);
-    var sourceDirs = fslib.parse(config);
+    var g3Config = lib.getG3Config(appPath, 'run');
+    lib.copyAppFiles(g3Config);
+    var sourceDirs = lib.parse(g3Config);
     if (!sourceDirs || sourceDirs.length === 0)
         return commands.serve(appPath);
-    fslib.watch(config, sourceDirs);
+    lib.watch(g3Config, sourceDirs);
     var options = {
-        entry: path.join(config._g3Path, models.Const.FILE_APP + '.jsx'),
+        entry: path.join(g3Config._g3Path, models.Const.FILE_APP + '.jsx'),
         output: {
-            path: path.join(config._g3Path, './assets/js'),
+            path: path.join(g3Config._g3Path, './assets/js'),
             publicPath: "/",
             filename: "bundle.js"
         },
@@ -40,7 +40,7 @@ function run(appPath) {
         devtool: "sourcemap",
         debug: true
     };
-    var port = config.port || 9393;
+    var port = g3Config.port || 9393;
     var compiler = webpack(options);
     return new WebpackDevServer(compiler, {
         contentBase: path.resolve(appPath + '/.g3/public'),

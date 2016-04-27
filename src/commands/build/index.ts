@@ -2,22 +2,22 @@ import * as path from 'path'
 import * as _ from 'lodash'
 import * as webpack from 'webpack'
 import * as models from '../../models'
-import * as fslib from '../../fslib'
+import * as lib from '../../lib'
 
 export function build(appPath) {
-  const config: models.Config = fslib.getConfig(appPath, 'build')
-  fslib.copyAppFiles(config)
+  const g3Config: models.G3Config = lib.getG3Config(appPath, 'build')
+  lib.copyAppFiles(g3Config)
 
-  const sourceDirs: Array<models.SourceDir> = fslib.parse(config)
+  const sourceDirs: Array<models.SourceDir> = lib.parse(g3Config)
   if (!sourceDirs || sourceDirs.length === 0) return
 
   var options = {
-    entry: path.join(config._g3Path, '/' + models.Const.FILE_APP + '.jsx'),
+    entry: path.join(g3Config._g3Path, '/' + models.Const.FILE_APP + '.jsx'),
     'process.env.NODE_ENV': '"production"',
     errorDetails: false,
     debug: false,
     output: {
-      path: path.join(config.destination, './assets/js'),
+      path: path.join(g3Config.destination, './assets/js'),
       publicPath: "/assets/js/",
       filename: "bundle.js"
     },
