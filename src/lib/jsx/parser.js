@@ -41,7 +41,7 @@ var Parser = (function () {
         }
         return true;
     };
-    Parser.prototype.parse = function (element) {
+    Parser.prototype.convert = function (element) {
         this.reset();
         var wrapper = createElement('div');
         wrapper.innerHTML = element;
@@ -129,7 +129,6 @@ var Parser = (function () {
     };
     return Parser;
 }());
-var parser = new Parser();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = parser;
+exports.default = Parser;
 //# sourceMappingURL=parser.js.map

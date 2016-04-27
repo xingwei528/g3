@@ -1,20 +1,15 @@
-import * as _ from 'lodash'
-var jsdom = require('jsdom-no-contextify').jsdom
-const HTMLtoJSX = require('htmltojsx')
-var defaultView = jsdom().defaultView;
+import HTMLtoJSX from './htmltojsx'
 
-import parser from './parser'
-
-export function getJSXContnt(html) {
+export function getJSXContent(html: string, components: Array<string>) {
   const htmlToJSX = new HTMLtoJSX({
     createClass: false
-  })
+  }, components)
 
   var output = `import React from 'react';
 export default React.createClass({
   render: function() {
     return (
-      ${htmlToJSX.convert(parser.parse(html))}
+      ${htmlToJSX.convert(html)}
     )
   }
 });`

@@ -7,10 +7,11 @@ import * as lib from '../'
 var expect = chai.expect
 
 describe('jsx', function() {
-  it('createReactComponent', function(done) {
-    const jsx = lib.getJSXContnt('<div>cc</div>')
-
-    console.log(jsx)
+  it('getJSXContent', function(done) {
+    const jsx = lib.getJSXContent(`
+<div></div>
+<div></div>
+      `, ['nav'])
 
     done()
   })

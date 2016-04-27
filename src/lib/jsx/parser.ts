@@ -55,7 +55,7 @@ class Parser {
     return true
   }
 
-  parse(element) {
+  convert(element) {
     this.reset()
 
     var wrapper = createElement('div')
@@ -155,5 +155,4 @@ class Parser {
   }
 }
 
-const parser = new Parser()
-export default parser
+export default Parser

@@ -1,14 +1,11 @@
 "use strict";
-var jsdom = require('jsdom-no-contextify').jsdom;
-var HTMLtoJSX = require('htmltojsx');
-var defaultView = jsdom().defaultView;
-var parser_1 = require('./parser');
-function getJSXContnt(html) {
-    var htmlToJSX = new HTMLtoJSX({
+var htmltojsx_1 = require('./htmltojsx');
+function getJSXContent(html, components) {
+    var htmlToJSX = new htmltojsx_1.default({
         createClass: false
-    });
-    var output = "import React from 'react';\nexport default React.createClass({\n  render: function() {\n    return (\n      " + htmlToJSX.convert(parser_1.default.parse(html)) + "\n    )\n  }\n});";
+    }, components);
+    var output = "import React from 'react';\nexport default React.createClass({\n  render: function() {\n    return (\n      " + htmlToJSX.convert(html) + "\n    )\n  }\n});";
     return output;
 }
-exports.getJSXContnt = getJSXContnt;
+exports.getJSXContent = getJSXContent;
 //# sourceMappingURL=index.js.map

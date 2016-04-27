@@ -23,7 +23,7 @@ function parse(g3Config) {
                 var htmlPath = path.join(g3Config._g3Path, sourceDir.key, filename);
                 var jsxPath = path.join(g3Config._g3Path, sourceDir.key, filename.substring(0, filename.lastIndexOf('.')) + '.jsx');
                 var html = lib.readFileSync(htmlPath);
-                var jsx = lib.getJSXContnt(html);
+                var jsx = lib.getJSXContent(html, sourceDir.components);
                 lib.write(jsxPath, jsx);
             }
         });

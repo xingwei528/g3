@@ -5,6 +5,7 @@ export class SourceDir {
   path: string
   filenames: Array<string>
   dirnames: Array<string>
+  components: Array<string>
 
   config: models.DirConfig
 }

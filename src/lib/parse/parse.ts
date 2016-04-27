@@ -39,7 +39,7 @@ ReactDOM.render(
         const htmlPath = path.join(g3Config._g3Path, sourceDir.key, filename)
         const jsxPath = path.join(g3Config._g3Path, sourceDir.key, filename.substring(0, filename.lastIndexOf('.')) + '.jsx')
         const html = lib.readFileSync(htmlPath)
-        const jsx = lib.getJSXContnt(html)
+        const jsx = lib.getJSXContent(html, sourceDir.components)
         lib.write(jsxPath, jsx)
       }
     })
