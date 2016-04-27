@@ -10,7 +10,7 @@ function parse(g3Config) {
         return sourceDirs;
     lib.copySync(g3Config.source, g3Config._g3Path);
     if (!lib.isFile(path.join(g3Config._g3Path, models.Const.FILE_APP) + '.jsx') && !lib.isFile(path.join(g3Config._g3Path, models.Const.FILE_APP) + '.html')) {
-        var appJS = "const React = require('react');\n    const ReactDOM = require('react-dom');\n    const router = require('react-router');\n    const config = require('./config');\n    ReactDOM.render(\n      <router.Router history={router." + g3Config.history + "} routes={config}/>,\n      document.getElementById('" + models.Const.DOM_REACT_ROOT + "')\n    );";
+        var appJS = "import React from 'react';\nimport ReactDOM from 'react-dom';\nimport {Router} from 'react-router';\nimport config from './config';\nReactDOM.render(\n  <Router history={router." + g3Config.history + "} routes={config}/>,\n  document.getElementById('" + models.Const.DOM_REACT_ROOT + "')\n);";
         lib.write(path.join(g3Config._g3Path, models.Const.FILE_APP + '.jsx'), appJS);
     }
     lib.getSourceDirs(g3Config, g3Config.source, sourceDirs, true);

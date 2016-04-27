@@ -10,14 +10,14 @@ export function getJSXContnt(html) {
     createClass: false
   })
 
-  var output = `const React = require('react');
-  module.exports = React.createClass({
-    render: function() {
-      return (
-        ` + htmlToJSX.convert(parser.parse(html)) + `
-      )
-    }
-  });`
+  var output = `import React from 'react';
+export default React.createClass({
+  render: function() {
+    return (
+      ${htmlToJSX.convert(parser.parse(html))}
+    )
+  }
+});`
 
   return output
 }
