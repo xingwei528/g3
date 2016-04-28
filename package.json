@@ -1,6 +1,6 @@
 {
   "name": "g3",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "ReactJS Static Site Generator",
   "author": "Get3W <corp@get3w.com>",
   "bin": {
@@ -41,7 +41,6 @@
     "express": "^4.13.4",
     "front-matter": "^2.0.7",
     "fs-extra": "^0.26.7",
-    "htmltojsx": "^0.2.5",
     "js-yaml": "^3.5.5",
     "jsdom-no-contextify": "^3.1.0",
     "lodash": "^4.6.1",
