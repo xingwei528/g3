@@ -27,7 +27,6 @@
     "lib/config/getSourceDirs.ts",
     "lib/config/index.ts",
     "lib/config/prepareG3.ts",
-    "lib/copy/index.spec.ts",
     "lib/copy/index.ts",
     "lib/index.ts",
     "lib/jsx/htmltojsx.spec.ts",

@@ -11,14 +11,14 @@ export function write(p: string, chunk: any) {
   ws.write(chunk)
 }
 
-export function writeHTML(g3Config: models.G3Config, routePath: string, content: string) {
+export function writeHTML(g3Config: models.G3Config, routePath: string, devServer: boolean) {
   if (routePath.indexOf('*') !== -1 || routePath.indexOf(':') !== -1) return
   const filepath = path.join(g3Config.destination, routePath, "index.html")
-  let scripts = '<script src="/assets/js/bundle.js?v=' + g3Config._timeStamp + '"></script>'
-  if (g3Config._command === 'run') {
+  let scripts = `<script src="/assets/js/bundle.js?v=${g3Config._timeStamp}"></script>`
+  if (devServer) {
     scripts = '<script src="/webpack-dev-server.js"></script><script src="/bundle.js"></script>'
   }
-  let html = g3Config._indexContent.replace('<div id="' + models.Const.DOM_REACT_ROOT + '"></div>', '<div id="' + models.Const.DOM_REACT_ROOT + '">' + content + '</div>' + scripts)
+  let html = g3Config._indexContent.replace(`<div id="${models.Const.DOM_REACT_ROOT}"></div>`, `<div id="${models.Const.DOM_REACT_ROOT}"></div>${scripts}`)
   write(filepath, html)
 }
 
@@ -49,9 +49,11 @@ export function writeDATA(g3Config: models.G3Config) {
           dirFiles[dirPath] = arr
           lib.removeSync(filepath)
 
-          let routePath = path.relative(dataPath, filepath)
-          routePath = routePath.substr(0, routePath.lastIndexOf('.'))
-          writeHTML(g3Config, routePath, '')
+          // if (g3Config._command === 'build') {
+          //   let routePath = path.relative(dataPath, filepath)
+          //   routePath = routePath.substr(0, routePath.lastIndexOf('.'))
+          //   writeHTML(g3Config, routePath)
+          // }
         }
       }
     }

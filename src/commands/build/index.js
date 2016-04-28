@@ -9,6 +9,10 @@ function build(appPath) {
     var sourceDirs = lib.parse(g3Config);
     if (!sourceDirs || sourceDirs.length === 0)
         return;
+    sourceDirs.forEach(function (sourceDir) {
+        var routePath = lib.getRoutePath(sourceDir);
+        lib.writeHTML(g3Config, routePath, false);
+    });
     var options = {
         entry: path.join(g3Config._g3Path, '/' + models.Const.FILE_APP + '.jsx'),
         'process.env.NODE_ENV': '"production"',

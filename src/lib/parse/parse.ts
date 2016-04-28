@@ -27,7 +27,7 @@ ReactDOM.render(
     lib.write(path.join(g3Config._g3Path, models.Const.FILE_APP + '.jsx'), appJS)
   }
 
-  lib.getSourceDirs(g3Config, g3Config.source, sourceDirs, true)
+  lib.getSourceDirs(g3Config, g3Config.source, null, sourceDirs)
 
   sourceDirs.forEach((sourceDir: models.SourceDir) => {
     const configPath = path.join(g3Config._g3Path, sourceDir.key, models.Const.FILE_CONFIG_JS)

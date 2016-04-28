@@ -13,7 +13,7 @@ function parse(g3Config) {
         var appJS = "import React from 'react';\nimport ReactDOM from 'react-dom';\nimport {Router} from 'react-router';\nimport config from './config';\nReactDOM.render(\n  <Router history={router." + g3Config.history + "} routes={config}/>,\n  document.getElementById('" + models.Const.DOM_REACT_ROOT + "')\n);";
         lib.write(path.join(g3Config._g3Path, models.Const.FILE_APP + '.jsx'), appJS);
     }
-    lib.getSourceDirs(g3Config, g3Config.source, sourceDirs, true);
+    lib.getSourceDirs(g3Config, g3Config.source, null, sourceDirs);
     sourceDirs.forEach(function (sourceDir) {
         var configPath = path.join(g3Config._g3Path, sourceDir.key, models.Const.FILE_CONFIG_JS);
         var configContent = lib.getConfigJSContent(g3Config, sourceDir);

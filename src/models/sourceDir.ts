@@ -7,5 +7,6 @@ export class SourceDir {
   dirnames: Array<string>
   components: Array<string>
 
+  parent: SourceDir
   config: models.DirConfig
 }

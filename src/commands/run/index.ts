@@ -13,6 +13,8 @@ export function run(appPath) {
   const sourceDirs: Array<models.SourceDir> = lib.parse(g3Config)
   if (!sourceDirs || sourceDirs.length === 0) return commands.serve(appPath)
 
+  lib.writeHTML(g3Config, '/', true)
+
   lib.watch(g3Config, sourceDirs)
 
   var options = {

@@ -11,6 +11,7 @@ function run(appPath) {
     var sourceDirs = lib.parse(g3Config);
     if (!sourceDirs || sourceDirs.length === 0)
         return commands.serve(appPath);
+    lib.writeHTML(g3Config, '/', true);
     lib.watch(g3Config, sourceDirs);
     var options = {
         entry: path.join(g3Config._g3Path, models.Const.FILE_APP + '.jsx'),

@@ -47,8 +47,8 @@ function syncFile(g3Config: models.G3Config, sourceDirs: Array<models.SourceDir>
 }
 
 function syncDir(g3Config: models.G3Config, sourceDirs: Array<models.SourceDir>, p: string) {
-  console.log(p)
-  lib.getSourceDirs(g3Config, p, sourceDirs, false)
+  // console.log(p)
+  // lib.getSourceDirs(g3Config, p, sourceDirs, false)
 }
 
 export function watch (config: models.G3Config, sourceDirs: Array<models.SourceDir>) {

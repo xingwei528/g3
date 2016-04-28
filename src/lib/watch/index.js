@@ -49,8 +49,6 @@ function syncFile(g3Config, sourceDirs, p) {
     }
 }
 function syncDir(g3Config, sourceDirs, p) {
-    console.log(p);
-    lib.getSourceDirs(g3Config, p, sourceDirs, false);
 }
 function watch(config, sourceDirs) {
     if (!sourceDirs || sourceDirs.length === 0)

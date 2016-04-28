@@ -1,3 +1,4 @@
+import * as path from 'path'
 import * as models from '../../models'
 import * as lib from '../'
 
@@ -7,7 +8,6 @@ export function getConfigJSContent(g3Config: models.G3Config, sourceDir: models.
   if (sourceDir.config.path) {
     configJS += `
   path: '${sourceDir.config.path}'`
-    lib.writeHTML(g3Config, sourceDir.config.path, '')
   } else {
     configJS += `
   component: 'div'`
@@ -25,7 +25,7 @@ export function getConfigJSContent(g3Config: models.G3Config, sourceDir: models.
   if (sourceDir.config.redirect) {
     let redirect = sourceDir.config.redirect
     if (redirect[0] !== '/') {
-      redirect = sourceDir.config.path + '/' + redirect
+      redirect = lib.urlJoin(lib.getRoutePath(sourceDir), redirect)
     }
     configJS += `,
   indexRoute: {

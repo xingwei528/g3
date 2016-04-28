@@ -10,15 +10,15 @@ function write(p, chunk) {
     ws.write(chunk);
 }
 exports.write = write;
-function writeHTML(g3Config, routePath, content) {
+function writeHTML(g3Config, routePath, devServer) {
     if (routePath.indexOf('*') !== -1 || routePath.indexOf(':') !== -1)
         return;
     var filepath = path.join(g3Config.destination, routePath, "index.html");
-    var scripts = '<script src="/assets/js/bundle.js?v=' + g3Config._timeStamp + '"></script>';
-    if (g3Config._command === 'run') {
+    var scripts = "<script src=\"/assets/js/bundle.js?v=" + g3Config._timeStamp + "\"></script>";
+    if (devServer) {
         scripts = '<script src="/webpack-dev-server.js"></script><script src="/bundle.js"></script>';
     }
-    var html = g3Config._indexContent.replace('<div id="' + models.Const.DOM_REACT_ROOT + '"></div>', '<div id="' + models.Const.DOM_REACT_ROOT + '">' + content + '</div>' + scripts);
+    var html = g3Config._indexContent.replace("<div id=\"" + models.Const.DOM_REACT_ROOT + "\"></div>", "<div id=\"" + models.Const.DOM_REACT_ROOT + "\"></div>" + scripts);
     write(filepath, html);
 }
 exports.writeHTML = writeHTML;
@@ -48,9 +48,6 @@ function writeDATA(g3Config) {
                     arr.push(obj);
                     dirFiles[dirPath] = arr;
                     lib.removeSync(filepath);
-                    var routePath = path.relative(dataPath, filepath);
-                    routePath = routePath.substr(0, routePath.lastIndexOf('.'));
-                    writeHTML(g3Config, routePath, '');
                 }
             }
         }

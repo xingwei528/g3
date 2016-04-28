@@ -6,7 +6,6 @@ function getConfigJSContent(g3Config, sourceDir) {
     configJS += 'export default {';
     if (sourceDir.config.path) {
         configJS += "\n  path: '" + sourceDir.config.path + "'";
-        lib.writeHTML(g3Config, sourceDir.config.path, '');
     }
     else {
         configJS += "\n  component: 'div'";
@@ -17,7 +16,7 @@ function getConfigJSContent(g3Config, sourceDir) {
     if (sourceDir.config.redirect) {
         var redirect = sourceDir.config.redirect;
         if (redirect[0] !== '/') {
-            redirect = sourceDir.config.path + '/' + redirect;
+            redirect = lib.urlJoin(lib.getRoutePath(sourceDir), redirect);
         }
         configJS += ",\n  indexRoute: {\n    onEnter: (nextState, replace) => replace('" + redirect + "')\n  }";
     }
