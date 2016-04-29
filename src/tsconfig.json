@@ -54,6 +54,7 @@
     "test/index.ts",
     "test/integration/build.ts",
     "typings/assertion-error/assertion-error.d.ts",
+    "typings/async/async.d.ts",
     "typings/bluebird/bluebird.d.ts",
     "typings/chai/chai.d.ts",
     "typings/chokidar/chokidar.d.ts",

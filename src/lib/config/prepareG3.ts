@@ -50,5 +50,7 @@ export function prepareG3(g3Config: models.G3Config): boolean {
     }
   })
 
+  console.log('Building the local index for the first time, please be patient')
+
   return true
 }

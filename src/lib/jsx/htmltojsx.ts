@@ -1,3 +1,5 @@
+import * as _ from 'lodash'
+
 // https://github.com/reactjs/react-magic/blob/master/src/htmltojsx.js
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Node.nodeType
@@ -351,8 +353,11 @@ class HTMLtoJSX {
    * @param {DOMElement} node
    */
   _beginVisitElement(node) {
-    var tagName = this.componentMap[this.level + '_' + this.order] ? 'Component_' + node.tagName.toLowerCase() : node.tagName.toLowerCase()
-    //var tagName = node.tagName.toLowerCase()
+    if (node.tagName.toLowerCase() === 'children') {
+      this.output += '{this.props.children}'
+      return
+    }
+    var tagName = this.componentMap[this.level + '_' + this.order] ? _.capitalize(node.tagName) : node.tagName.toLowerCase()
     var attributes = []
     for (var i = 0, count = node.attributes.length; i < count; i++) {
       attributes.push(this._getElementAttribute(node, node.attributes[i]))
@@ -385,8 +390,11 @@ class HTMLtoJSX {
    * @param {Node} node
    */
   _endVisitElement(node) {
-    var tagName = this.componentMap[this.level + '_' + this.order] ? 'Component_' + node.tagName.toLowerCase() : node.tagName.toLowerCase()
-    //var tagName = node.tagName.toLowerCase()
+    if (node.tagName.toLowerCase === 'children') {
+      return
+    }
+    var tagName = this.componentMap[this.level + '_' + this.order] ? _.capitalize(node.tagName) : node.tagName.toLowerCase()
+
     // De-indent a bit
     // TODO: It's inefficient to do it this way :/
     this.output = trimEnd(this.output, this.config.indent)

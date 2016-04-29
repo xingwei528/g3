@@ -8,10 +8,13 @@ describe('jsx', function() {
   it('htmlToJSX.parse', function(done) {
     const htmlToJSX = new HTMLtoJSX({
       createClass: false
-    }, ['nav'])
+    }, ['children'])
 
     const content = htmlToJSX.convert(`
-      <div><nav /><div /></div>
+<div>
+  layout
+  <Children>ss</Children>
+</div>
       `)
     console.log(content)
 
