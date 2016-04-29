@@ -26,7 +26,10 @@ export function prepareG3(g3Config: models.G3Config): boolean {
     "babel-loader",
     "babel-preset-es2015",
     "babel-preset-react",
-    "babel-preset-stage-0"
+    "babel-preset-stage-0",
+    "style-loader",
+    "css-loader",
+    "file-loader"
   ]
 
   pkgs.forEach((dep: string) => {

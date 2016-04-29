@@ -21,7 +21,10 @@ function prepareG3(g3Config) {
         "babel-loader",
         "babel-preset-es2015",
         "babel-preset-react",
-        "babel-preset-stage-0"
+        "babel-preset-stage-0",
+        "style-loader",
+        "css-loader",
+        "file-loader"
     ];
     pkgs.forEach(function (dep) {
         if (!lib.isDirectory(path.join(g3Config._appPath, 'node_modules', dep))) {

@@ -7,10 +7,10 @@
     "g3": "./src/bin/index.js"
   },
   "scripts": {
-    "test": "npm run test-lint && npm run test-func && npm run test-integration",
+    "test": "node_modules/.bin/mocha src/**/*.spec.js",
     "test-lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
-    "test-func": "node_modules/.bin/mocha src/**/*.spec.js",
     "test-integration": "node_modules/.bin/mocha ./src/test/integration",
+    "test-all": "npm run test-lint && npm test && npm run test-integration",
     "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
     "fix-build": "node ./src/bin/index.js build ./fix/en"
   },

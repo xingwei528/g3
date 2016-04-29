@@ -35,6 +35,14 @@ function run(appPath) {
                     query: {
                         presets: ['es2015', 'stage-0', 'react']
                     }
+                },
+                {
+                    test: /\.css$/,
+                    loader: "style-loader!css-loader"
+                },
+                {
+                    test: /\.(png|jpg)$/,
+                    loader: 'file-loader'
                 }
             ]
         },
@@ -44,7 +52,7 @@ function run(appPath) {
     var port = g3Config.port || 9393;
     var compiler = webpack(options);
     return new WebpackDevServer(compiler, {
-        contentBase: path.resolve(appPath + '/.g3/public'),
+        contentBase: g3Config.destination,
         stats: { colors: true },
         historyApiFallback: true
     }).listen(port, "localhost", function (err) {
