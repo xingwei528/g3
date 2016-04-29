@@ -228,7 +228,7 @@ var HTMLtoJSX = (function () {
         }
     };
     HTMLtoJSX.prototype._endVisitElement = function (node) {
-        if (node.tagName.toLowerCase === 'children') {
+        if (node.tagName.toLowerCase() === 'children') {
             return;
         }
         var tagName = this.componentMap[this.level + '_' + this.order] ? _.capitalize(node.tagName) : node.tagName.toLowerCase();
