@@ -1,5 +1,5 @@
 "use strict";
-var _ = require('lodash');
+var lib = require('../');
 var NODE_TYPE = {
     ELEMENT: 1,
     TEXT: 3,
@@ -80,14 +80,10 @@ var HTMLtoJSX = (function () {
     function HTMLtoJSX(config, components) {
         this.output = '';
         this.level = 0;
-        this.order = 0;
         this._inPreTag = false;
         this.componentMap = {};
         this.config = config || {};
         this.components = components || [];
-        if (this.config.createClass === undefined) {
-            this.config.createClass = true;
-        }
         if (!this.config.indent) {
             this.config.indent = '  ';
         }
@@ -95,24 +91,23 @@ var HTMLtoJSX = (function () {
     HTMLtoJSX.prototype.reset = function () {
         this.output = '';
         this.level = 0;
-        this.order = 0;
         this._inPreTag = false;
         this.componentMap = {};
+    };
+    HTMLtoJSX.prototype._getTagName = function (node) {
+        var tagName = node.tagName.toLowerCase();
+        if (tagName === 'link')
+            return 'Link';
+        var componentName = lib.toComponentName(node.tagName);
+        if (this.componentMap[this.level] && this.components.indexOf(componentName) !== -1) {
+            tagName = componentName;
+        }
+        return tagName;
     };
     HTMLtoJSX.prototype.convert = function (html) {
         this.reset();
         var containerEl = createElement('div');
         containerEl.innerHTML = '\n' + this._cleanInput(html) + '\n';
-        if (this.config.createClass) {
-            if (this.config.outputClassName) {
-                this.output = 'var ' + this.config.outputClassName + ' = React.createClass({\n';
-            }
-            else {
-                this.output = 'React.createClass({\n';
-            }
-            this.output += this.config.indent + 'render: function() {' + "\n";
-            this.output += this.config.indent + this.config.indent + 'return (\n';
-        }
         if (this._onlyOneTopLevel(containerEl)) {
             this._traverse(containerEl);
         }
@@ -121,12 +116,7 @@ var HTMLtoJSX = (function () {
             this.level++;
             this._visit(containerEl);
         }
-        this.output = this.output.trim() + '\n';
-        if (this.config.createClass) {
-            this.output += this.config.indent + this.config.indent + ');\n';
-            this.output += this.config.indent + '}\n';
-            this.output += '});';
-        }
+        this.output = this.output.trim();
         return this.output;
     };
     HTMLtoJSX.prototype._cleanInput = function (html) {
@@ -174,9 +164,9 @@ var HTMLtoJSX = (function () {
     HTMLtoJSX.prototype._beginVisit = function (node) {
         switch (node.nodeType) {
             case NODE_TYPE.ELEMENT:
-                var tagName = node.tagName.toLowerCase();
-                if (tagName === 'link' || this.components.indexOf(tagName) !== -1) {
-                    this.componentMap[this.level + '_' + this.order] = true;
+                var componentName = lib.toComponentName(node.tagName);
+                if (this.components.indexOf(componentName) !== -1) {
+                    this.componentMap[this.level] = true;
                 }
                 this._beginVisitElement(node);
                 break;
@@ -205,7 +195,7 @@ var HTMLtoJSX = (function () {
             this.output += '{this.props.children}';
             return;
         }
-        var tagName = this.componentMap[this.level + '_' + this.order] ? _.capitalize(node.tagName) : node.tagName.toLowerCase();
+        var tagName = this._getTagName(node);
         var attributes = [];
         for (var i = 0, count = node.attributes.length; i < count; i++) {
             attributes.push(this._getElementAttribute(node, node.attributes[i]));
@@ -231,7 +221,7 @@ var HTMLtoJSX = (function () {
         if (node.tagName.toLowerCase() === 'children') {
             return;
         }
-        var tagName = this.componentMap[this.level + '_' + this.order] ? _.capitalize(node.tagName) : node.tagName.toLowerCase();
+        var tagName = this._getTagName(node);
         this.output = trimEnd(this.output, this.config.indent);
         if (this._isSelfClosing(node)) {
             this.output += ' />';

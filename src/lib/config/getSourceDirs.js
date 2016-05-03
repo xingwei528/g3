@@ -16,6 +16,7 @@ function getSourceDirs(g3Config, dirPath, parent, sourceDirs) {
     sourceDir.path = dirPath;
     sourceDir.filenames = list.filenames;
     sourceDir.dirnames = list.dirnames;
+    sourceDir.components = lib.listComponentsSync(dirPath);
     sourceDir.parent = parent;
     lib.readDirConfig(sourceDir);
     sourceDirs.push(sourceDir);

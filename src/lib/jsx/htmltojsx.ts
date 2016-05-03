@@ -1,4 +1,5 @@
 import * as _ from 'lodash'
+import * as lib from '../'
 
 // https://github.com/reactjs/react-magic/blob/master/src/htmltojsx.js
 
@@ -123,7 +124,6 @@ function isNumeric(input) {
     && (typeof input === 'number' || parseInt(input, 10) == input)
 }
 
-
 var jsdom = require('jsdom-no-contextify').jsdom
 var window = jsdom().defaultView
 var createElement = function(tag) {
@@ -150,16 +150,12 @@ class HTMLtoJSX {
   private components: Array<string>
   private output = ''
   private level: number = 0
-  private order: number = 0
   private _inPreTag = false
   private componentMap: {[index: string]: boolean} = {}
 
   constructor(config, components: Array<string>) {
     this.config = config || {}
     this.components = components || []
-    if (this.config.createClass === undefined) {
-      this.config.createClass = true
-    }
     if (!this.config.indent) {
       this.config.indent = '  '
     }
@@ -171,10 +167,25 @@ class HTMLtoJSX {
   reset() {
     this.output = ''
     this.level = 0
-    this.order = 0
     this._inPreTag = false
     this.componentMap = {}
   }
+
+  /**
+   * Get tagName from node
+   * @param {Node} node
+   * @return {string} tagName
+   */
+  _getTagName(node): string {
+    var tagName = node.tagName.toLowerCase()
+    if (tagName === 'link') return 'Link'
+    const componentName = lib.toComponentName(node.tagName)
+    if (this.componentMap[this.level] && this.components.indexOf(componentName) !== -1) {
+      tagName = componentName
+    }
+    return tagName
+  }
+
   /**
    * Main entry point to the converter. Given the specified HTML, returns a
    * JSX object representing it.
@@ -187,16 +198,6 @@ class HTMLtoJSX {
     var containerEl = createElement('div')
     containerEl.innerHTML = '\n' + this._cleanInput(html) + '\n'
 
-    if (this.config.createClass) {
-      if (this.config.outputClassName) {
-        this.output = 'var ' + this.config.outputClassName + ' = React.createClass({\n'
-      } else {
-        this.output = 'React.createClass({\n'
-      }
-      this.output += this.config.indent + 'render: function() {' + "\n"
-      this.output += this.config.indent + this.config.indent + 'return (\n'
-    }
-
     if (this._onlyOneTopLevel(containerEl)) {
       // Only one top-level element, the component can return it directly
       // No need to actually visit the container element
@@ -208,12 +209,7 @@ class HTMLtoJSX {
       this.level++
       this._visit(containerEl)
     }
-    this.output = this.output.trim() + '\n'
-    if (this.config.createClass) {
-      this.output += this.config.indent + this.config.indent + ');\n'
-      this.output += this.config.indent + '}\n'
-      this.output += '});'
-    }
+    this.output = this.output.trim()
     return this.output
   }
 
@@ -310,9 +306,9 @@ class HTMLtoJSX {
   _beginVisit(node) {
     switch (node.nodeType) {
       case NODE_TYPE.ELEMENT:
-        const tagName = node.tagName.toLowerCase()
-        if (tagName === 'link' || this.components.indexOf(tagName) !== -1) {
-          this.componentMap[this.level + '_' + this.order] = true
+        const componentName = lib.toComponentName(node.tagName)
+        if (this.components.indexOf(componentName) !== -1) {
+          this.componentMap[this.level] = true
         }
         this._beginVisitElement(node)
         break
@@ -357,7 +353,7 @@ class HTMLtoJSX {
       this.output += '{this.props.children}'
       return
     }
-    var tagName = this.componentMap[this.level + '_' + this.order] ? _.capitalize(node.tagName) : node.tagName.toLowerCase()
+    const tagName = this._getTagName(node)
     var attributes = []
     for (var i = 0, count = node.attributes.length; i < count; i++) {
       attributes.push(this._getElementAttribute(node, node.attributes[i]))
@@ -393,8 +389,7 @@ class HTMLtoJSX {
     if (node.tagName.toLowerCase() === 'children') {
       return
     }
-    var tagName = this.componentMap[this.level + '_' + this.order] ? _.capitalize(node.tagName) : node.tagName.toLowerCase()
-
+    const tagName = this._getTagName(node)
     // De-indent a bit
     // TODO: It's inefficient to do it this way :/
     this.output = trimEnd(this.output, this.config.indent)

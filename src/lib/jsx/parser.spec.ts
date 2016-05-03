@@ -12,7 +12,6 @@ describe('jsx', function() {
         <a data-to="/">ss</a>
       </a></div>
       `)
-    console.log(content)
 
     done()
   })

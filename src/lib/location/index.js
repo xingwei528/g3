@@ -18,6 +18,21 @@ function pathJoin() {
     return '/' + _.trim(path.join.apply(path, paths).toLowerCase().replace(/\\/g, '/'), '/');
 }
 exports.pathJoin = pathJoin;
+function listComponentsSync(dirpath) {
+    var components = [];
+    var componentsPath = path.join(dirpath, 'components');
+    if (fse.existsSync(componentsPath)) {
+        var arr = fse.readdirSync(componentsPath) || [];
+        arr.forEach(function (name) {
+            var componentName = path.basename(name, path.extname(name));
+            if (components.indexOf(componentName) === -1) {
+                components.push(componentName);
+            }
+        });
+    }
+    return components;
+}
+exports.listComponentsSync = listComponentsSync;
 function listSync(dirpath) {
     var dirnames = [];
     var filenames = [];

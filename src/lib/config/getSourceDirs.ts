@@ -20,6 +20,7 @@ export function getSourceDirs(g3Config: models.G3Config, dirPath: string, parent
   sourceDir.path = dirPath
   sourceDir.filenames = list.filenames
   sourceDir.dirnames = list.dirnames
+  sourceDir.components = lib.listComponentsSync(dirPath)
   sourceDir.parent = parent;
   lib.readDirConfig(sourceDir)
 

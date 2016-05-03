@@ -1,11 +1,23 @@
-import HTMLtoJSX from './htmltojsx'
+import * as lib from '../'
+import HTMLtoJSX from './htmltojsx';
 
 export function getJSXContent(html: string, components: Array<string>) {
-  const htmlToJSX = new HTMLtoJSX({
-    createClass: false
-  }, components)
+  const namedComponents = components.map((component: string) => {
+    return lib.toComponentName(component)
+  })
 
-  var output = `import React from 'react';
+  const htmlToJSX = new HTMLtoJSX({}, namedComponents)
+
+  let imports = ''
+  for (let i = 0; i < components.length; i++) {
+    imports += `
+import ${namedComponents[i]} from './components/${components[i]}';`
+  }
+
+  var output = `
+import React from 'react';
+import { Link } from 'react-router';
+${imports}
 export default React.createClass({
   render: function() {
     return (

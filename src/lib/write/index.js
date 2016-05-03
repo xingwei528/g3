@@ -6,8 +6,7 @@ var marked = require('marked');
 var models = require('../../models');
 var lib = require('../');
 function write(p, chunk) {
-    var ws = fse.createOutputStream(p);
-    ws.write(chunk);
+    fse.outputFileSync(p, chunk);
 }
 exports.write = write;
 function writeHTML(g3Config, routePath, devServer) {

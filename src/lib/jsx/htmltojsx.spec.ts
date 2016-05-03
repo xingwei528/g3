@@ -8,15 +8,16 @@ describe('jsx', function() {
   it('htmlToJSX.parse', function(done) {
     const htmlToJSX = new HTMLtoJSX({
       createClass: false
-    }, ['children'])
+    }, ['SUBNAV'])
 
     const content = htmlToJSX.convert(`
-<div>
-  layout
-  <Children>ss</Children>
-</div>
+      <div id="homepage">
+        <subNav />
+        <section id="content_container"></section>
+      </div>
       `)
-    console.log(content)
+
+      console.log(content)
 
     done()
   })

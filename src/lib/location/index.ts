@@ -3,6 +3,7 @@ import * as _ from 'lodash'
 import * as fse from 'fs-extra'
 
 import * as models from '../../models'
+import * as lib from '../'
 
 export function pathRelative(from: string, to: string): string {
   return '/' + _.trim(path.relative(from, to).toLowerCase().replace(/\\/g,'/'), '/')
@@ -14,6 +15,23 @@ export function pathParent(key: string): string {
 
 export function pathJoin(...paths: string[]): string {
   return '/' + _.trim(path.join(...paths).toLowerCase().replace(/\\/g,'/'), '/')
+}
+
+export function listComponentsSync(dirpath: string): Array<string> {
+  let components: Array<string> = []
+
+  const componentsPath = path.join(dirpath, 'components')
+  if (fse.existsSync(componentsPath)) {
+    const arr: string[] = fse.readdirSync(componentsPath) || []
+    arr.forEach((name: string) => {
+      const componentName = path.basename(name, path.extname(name))
+      if (components.indexOf(componentName) === -1) {
+        components.push(componentName)
+      }
+    })
+  }
+
+  return components
 }
 
 export function listSync(dirpath: string): {

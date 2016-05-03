@@ -6,7 +6,6 @@ describe('jsx', function () {
     it('parser.convert', function (done) {
         var parser = new parser_1.default();
         var content = parser.convert("\n      <div><a data-to=\"/\">cc\n        <a data-to=\"/\">ss</a>\n      </a></div>\n      ");
-        console.log(content);
         done();
     });
 });

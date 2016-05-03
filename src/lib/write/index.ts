@@ -7,8 +7,9 @@ import * as models from '../../models'
 import * as lib from '../'
 
 export function write(p: string, chunk: any) {
-  const ws = fse.createOutputStream(p)
-  ws.write(chunk)
+  // const ws = fse.createOutputStream(p)
+  // ws.write(chunk)
+  fse.outputFileSync(p, chunk)
 }
 
 export function writeHTML(g3Config: models.G3Config, routePath: string, devServer: boolean) {

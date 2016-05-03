@@ -6,8 +6,8 @@ describe('jsx', function () {
     it('htmlToJSX.parse', function (done) {
         var htmlToJSX = new htmltojsx_1.default({
             createClass: false
-        }, ['children']);
-        var content = htmlToJSX.convert("\n<div>\n  layout\n  <Children>ss</Children>\n</div>\n      ");
+        }, ['SUBNAV']);
+        var content = htmlToJSX.convert("\n      <div id=\"homepage\">\n        <subNav />\n        <section id=\"content_container\"></section>\n      </div>\n      ");
         console.log(content);
         done();
     });
