@@ -8,8 +8,9 @@ describe('jsx', function() {
   it('parser.convert', function(done) {
     const parser = new Parser()
     const content = parser.convert(`
-      <div></div>
-      <div></div>
+      <div><a data-to="/">cc
+        <a data-to="/">ss</a>
+      </a></div>
       `)
     console.log(content)
 

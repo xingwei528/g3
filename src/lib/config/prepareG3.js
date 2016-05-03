@@ -42,6 +42,7 @@ function prepareG3(g3Config) {
             });
         }
     });
+    console.log('Building the local index for the first time, please be patient');
     return true;
 }
 exports.prepareG3 = prepareG3;

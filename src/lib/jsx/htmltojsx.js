@@ -1,4 +1,5 @@
 "use strict";
+var _ = require('lodash');
 var NODE_TYPE = {
     ELEMENT: 1,
     TEXT: 3,
@@ -200,7 +201,11 @@ var HTMLtoJSX = (function () {
         }
     };
     HTMLtoJSX.prototype._beginVisitElement = function (node) {
-        var tagName = this.componentMap[this.level + '_' + this.order] ? 'Component_' + node.tagName.toLowerCase() : node.tagName.toLowerCase();
+        if (node.tagName.toLowerCase() === 'children') {
+            this.output += '{this.props.children}';
+            return;
+        }
+        var tagName = this.componentMap[this.level + '_' + this.order] ? _.capitalize(node.tagName) : node.tagName.toLowerCase();
         var attributes = [];
         for (var i = 0, count = node.attributes.length; i < count; i++) {
             attributes.push(this._getElementAttribute(node, node.attributes[i]));
@@ -223,7 +228,10 @@ var HTMLtoJSX = (function () {
         }
     };
     HTMLtoJSX.prototype._endVisitElement = function (node) {
-        var tagName = this.componentMap[this.level + '_' + this.order] ? 'Component_' + node.tagName.toLowerCase() : node.tagName.toLowerCase();
+        if (node.tagName.toLowerCase() === 'children') {
+            return;
+        }
+        var tagName = this.componentMap[this.level + '_' + this.order] ? _.capitalize(node.tagName) : node.tagName.toLowerCase();
         this.output = trimEnd(this.output, this.config.indent);
         if (this._isSelfClosing(node)) {
             this.output += ' />';
