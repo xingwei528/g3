@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-"use strict";
+
 var program = require('commander');
 var packageJson = require('../../package.json');
 var commands = require('../commands');
@@ -37,4 +37,3 @@ program
 }).on('--help', function () {
 });
 program.parse(process.argv);
-//# sourceMappingURL=index.js.map
