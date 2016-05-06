@@ -9,22 +9,22 @@ function syncFile(g3Config: models.G3Config, sourceDirs: Array<models.SourceDir>
   const ext = path.extname(p)
   const dirpath = path.dirname(p)
   const filename = path.basename(p)
-  if (dirpath === g3Config._g3Path || dirpath === g3Config.destination) return
+  if (dirpath === g3Config._g3Path || dirpath === g3Config._destinationPath) return
 
-  const rel = lib.pathRelative(g3Config.source, p)
-  const g3Path = path.join(g3Config._g3Path, lib.pathRelative(g3Config.source, p))
+  const rel = lib.pathRelative(g3Config._sourcePath, p)
+  const g3Path = path.join(g3Config._g3Path, lib.pathRelative(g3Config._sourcePath, p))
   if (ext === '.js' || ext === '.jsx') {
     lib.readFile(p, (error: Error, data: NodeBuffer) => {
       if (error) {
         console.log('Error happened', error);
       } else {
-        lib.write(g3Path, data)
+        lib.writeSync(g3Path, data)
         console.log('file changed: ' + rel)
       }
     })
   } else if (filename == models.Const.FILE_CONFIG_YML) {
     const dirpath = path.dirname(p)
-    const key = lib.pathRelative(g3Config.source, dirpath)
+    const key = lib.pathRelative(g3Config._sourcePath, dirpath)
     const sourceDir = _.find(sourceDirs, (s: models.SourceDir) => {
       return s.key = key
     })
@@ -32,10 +32,10 @@ function syncFile(g3Config: models.G3Config, sourceDirs: Array<models.SourceDir>
     if (sourceDir) {
       const configPath = path.join(g3Config._g3Path, sourceDir.key, models.Const.FILE_CONFIG_JS)
       const configContent = lib.getConfigJSContent(g3Config, sourceDir)
-      lib.write(configPath, configContent)
+      lib.writeSync(configPath, configContent)
     }
   } else {
-    const g3PublicPath = path.join(g3Config.destination, lib.pathRelative(g3Config._appPath, p))
+    const g3PublicPath = path.join(g3Config._destinationPath, lib.pathRelative(g3Config._appPath, p))
     lib.copy(p, g3PublicPath, (err: Error) => {
       if (err) {
         console.log('error: ' + err)

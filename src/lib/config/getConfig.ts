@@ -11,17 +11,16 @@ export function getG3Config(appPath: string, command: string): models.G3Config {
   let config: models.G3Config = lib.readG3Config(appPath)
   config._appPath = appPath
   config._g3Path = path.join(appPath, models.Const.DIR_DOT_G3)
-  config._command = command
-  config._timeStamp = Math.floor(Date.now() / 1000)
-
+  config._dataPath = path.join(appPath, models.Const.DIR_DATA)
   if (!config.source) {
     config.source = './' + models.Const.DIR_SRC
   }
   if (!config.destination) {
     config.destination = './' + models.Const.DIR_PUBLIC
   }
-  config.source = path.join(config._appPath, config.source)
-  config.destination = config._command === 'run' ? path.join(config._g3Path, 'public') : path.join(config._appPath, config.destination)
+  config._sourcePath = path.join(config._appPath, config.source)
+  config._destinationPath = command === 'run' ? path.join(config._g3Path, 'public') : path.join(config._appPath, config.destination)
+  config._timeStamp = Math.floor(Date.now() / 1000)
 
   if (!config.history) {
     config.history = 'browserHistory'

@@ -6,14 +6,14 @@ import * as commands from '../'
 
 export function serve(appPath) {
   const g3Config: models.G3Config = lib.getG3Config(appPath, 'serve')
-  if (!lib.isDirectory(g3Config.destination)) {
+  if (!lib.isDirectory(g3Config._destinationPath)) {
     commands.build(appPath)
   }
 
   var app = express()
   app.use(compression())
 
-  app.use(express.static(g3Config.destination))
+  app.use(express.static(g3Config._destinationPath))
 
   var PORT = g3Config.port || 9393
 

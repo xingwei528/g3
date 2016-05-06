@@ -14,4 +14,15 @@ export class Const {
   static FILE_LAYOUT = 'layout'
 
   static DOM_REACT_ROOT = 'root'
+
+  static DEFAULT_TAG_NAMES = [
+    'Link',
+    'IndexLink'
+  ]
+  static DEFAULT_TAG_NAMES_LOWER = [
+    'link',
+    'indexlink'
+  ]
+  static DEFAULT_IMPORTS = `import React from 'react';
+import { Link, IndexLink } from 'react-router';`
 }

@@ -3,16 +3,16 @@ import * as fse from 'fs-extra'
 import * as _ from 'lodash'
 import * as cp from 'child_process'
 
-import * as models from '../../models'
-import * as lib from '../'
+import * as models from '../../../models'
+import * as lib from '../../'
 
-export function prepareG3(g3Config: models.G3Config): boolean {
+export function prepare(g3Config: models.G3Config) {
   const gitignorePath = path.join(g3Config._appPath, '.gitignore')
   if (!lib.isFile(gitignorePath)) {
     let text = 'node_modules/\n'
     text += '.g3/\n'
     text += 'public/'
-    lib.write(gitignorePath, text)
+    lib.writeSync(gitignorePath, text)
   }
 
   const pkgs = [
@@ -49,8 +49,4 @@ export function prepareG3(g3Config: models.G3Config): boolean {
       })
     }
   })
-
-  console.log('Building the local index for the first time, please be patient')
-
-  return true
 }

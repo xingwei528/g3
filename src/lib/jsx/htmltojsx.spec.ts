@@ -8,13 +8,13 @@ describe('jsx', function() {
   it('htmlToJSX.parse', function(done) {
     const htmlToJSX = new HTMLtoJSX({
       createClass: false
-    }, ['SUBNAV'])
+    }, ['Link'])
 
     const content = htmlToJSX.convert(`
-      <div id="homepage">
-        <subNav />
-        <section id="content_container"></section>
-      </div>
+      <ul>
+      <li><Link to="/team" activeClassName="active"></Link><br /></li>
+      <li><Link to="/about" activeClassName="active"><i class="icon about"></i> 关于我们</Link></li>
+  </ul>
       `)
 
       console.log(content)

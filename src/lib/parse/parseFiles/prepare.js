@@ -1,14 +1,14 @@
 "use strict";
 var path = require('path');
 var cp = require('child_process');
-var lib = require('../');
-function prepareG3(g3Config) {
+var lib = require('../../');
+function prepare(g3Config) {
     var gitignorePath = path.join(g3Config._appPath, '.gitignore');
     if (!lib.isFile(gitignorePath)) {
         var text = 'node_modules/\n';
         text += '.g3/\n';
         text += 'public/';
-        lib.write(gitignorePath, text);
+        lib.writeSync(gitignorePath, text);
     }
     var pkgs = [
         "react",
@@ -42,8 +42,6 @@ function prepareG3(g3Config) {
             });
         }
     });
-    console.log('Building the local index for the first time, please be patient');
-    return true;
 }
-exports.prepareG3 = prepareG3;
-//# sourceMappingURL=prepareG3.js.map
+exports.prepare = prepare;
+//# sourceMappingURL=prepare.js.map

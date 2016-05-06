@@ -52,7 +52,7 @@ function run(appPath) {
     var port = g3Config.port || 9393;
     var compiler = webpack(options);
     return new WebpackDevServer(compiler, {
-        contentBase: g3Config.destination,
+        contentBase: g3Config._destinationPath,
         stats: { colors: true },
         historyApiFallback: true
     }).listen(port, "localhost", function (err) {

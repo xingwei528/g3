@@ -6,6 +6,7 @@ export class SourceDir {
   filenames: Array<string>
   dirnames: Array<string>
   components: Array<string>
+  isExclude: boolean
 
   parent: SourceDir
   config: models.DirConfig

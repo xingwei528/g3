@@ -22,7 +22,7 @@ export function build(appPath) {
     errorDetails: false,
     debug: false,
     output: {
-      path: path.join(g3Config.destination, './assets/js'),
+      path: path.join(g3Config._destinationPath, './assets/js'),
       publicPath: "/assets/js/",
       filename: "bundle.js"
     },

@@ -16,16 +16,16 @@ function copyAppFiles(g3Config) {
             || file === 'g3.json'
             || file === 'package.json')
             return;
-        copySync(filePath, path.join(g3Config.destination, file));
+        copySync(filePath, path.join(g3Config._destinationPath, file));
     });
     g3Config._directories.forEach(function (dir) {
         var dirPath = path.join(g3Config._appPath, dir);
         if (dir[0] === '.'
             || dir === 'node_modules'
-            || dirPath === g3Config.source
-            || dirPath === g3Config.destination)
+            || dirPath === g3Config._sourcePath
+            || dirPath === g3Config._destinationPath)
             return;
-        copySync(dirPath, path.join(g3Config.destination, dir));
+        copySync(dirPath, path.join(g3Config._destinationPath, dir));
     });
 }
 exports.copyAppFiles = copyAppFiles;

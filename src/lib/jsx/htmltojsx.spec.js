@@ -6,8 +6,8 @@ describe('jsx', function () {
     it('htmlToJSX.parse', function (done) {
         var htmlToJSX = new htmltojsx_1.default({
             createClass: false
-        }, ['SUBNAV']);
-        var content = htmlToJSX.convert("\n      <div id=\"homepage\">\n        <subNav />\n        <section id=\"content_container\"></section>\n      </div>\n      ");
+        }, ['Link']);
+        var content = htmlToJSX.convert("\n      <ul>\n      <li><Link to=\"/team\" activeClassName=\"active\"></Link><br /></li>\n      <li><Link to=\"/about\" activeClassName=\"active\"><i class=\"icon about\"></i> \u5173\u4E8E\u6211\u4EEC</Link></li>\n  </ul>\n      ");
         console.log(content);
         done();
     });

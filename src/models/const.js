@@ -14,6 +14,15 @@ var Const = (function () {
     Const.FILE_INDEX = 'index';
     Const.FILE_LAYOUT = 'layout';
     Const.DOM_REACT_ROOT = 'root';
+    Const.DEFAULT_TAG_NAMES = [
+        'Link',
+        'IndexLink'
+    ];
+    Const.DEFAULT_TAG_NAMES_LOWER = [
+        'link',
+        'indexlink'
+    ];
+    Const.DEFAULT_IMPORTS = "import React from 'react';\nimport { Link, IndexLink } from 'react-router';";
     return Const;
 }());
 exports.Const = Const;

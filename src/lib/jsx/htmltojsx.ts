@@ -178,7 +178,6 @@ class HTMLtoJSX {
    */
   _getTagName(node): string {
     var tagName = node.tagName.toLowerCase()
-    if (tagName === 'link') return 'Link'
     const componentName = lib.toComponentName(node.tagName)
     if (this.componentMap[this.level] && this.components.indexOf(componentName) !== -1) {
       tagName = componentName
