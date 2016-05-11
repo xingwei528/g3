@@ -11,10 +11,7 @@ describe('jsx', function() {
     }, ['Link'])
 
     const content = htmlToJSX.convert(`
-      <ul>
-      <li><Link to="/team" activeClassName="active"></Link><br /></li>
-      <li><Link to="/about" activeClassName="active"><i class="icon about"></i> 关于我们</Link></li>
-  </ul>
+      <Link to="/about" activeClassName="active"><i class="icon about"></i> 关于我们</Link>
       `)
 
       console.log(content)

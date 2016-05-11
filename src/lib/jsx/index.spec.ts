@@ -8,7 +8,7 @@ var expect = chai.expect
 
 describe('jsx', function() {
   it('getJSXContent', function(done) {
-    const jsx = lib.getJSXContent(`
+    const jsx = lib.getJSXContent('.html', `
 <div></div>
 <div></div>
       `, ['nav'])

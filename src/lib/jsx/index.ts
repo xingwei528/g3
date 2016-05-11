@@ -2,7 +2,11 @@ import * as lib from '../'
 import HTMLtoJSX from './htmltojsx';
 import * as models from '../../models'
 
-export function getJSXContent(html: string, components: Array<string>) {
+export function getJSXContent(ext: string, content: string, components: Array<string>) {
+  if (ext === '.jsx' && (content || '').indexOf('return ') !== -1) {
+    return content
+  }
+
   const namedComponents = components.map((component: string) => {
     return lib.toComponentName(component)
   })
@@ -19,12 +23,17 @@ export function getJSXContent(html: string, components: Array<string>) {
 import ${lib.toComponentName(component)} from './components/${component}';`
   })
 
+  let jsx = content || ''
+  if (ext === '.html' || ext === '.htm') {
+    jsx = htmlToJSX.convert(content)
+  }
+
   var output = `
 ${imports}
 export default React.createClass({
   render: function() {
     return (
-      ${htmlToJSX.convert(html)}
+      ${jsx}
     )
   }
 });`

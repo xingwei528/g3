@@ -29,11 +29,12 @@ export function parseSourceFiles(g3Config: models.G3Config): Array<models.Source
     }
 
     sourceDir.filenames.forEach((filename: string) => {
-      if (path.extname(filename) === '.html') {
-        const htmlPath = path.join(g3Config._g3Path, sourceDir.key, filename)
+      const ext = path.extname(filename)
+      if (ext === '.html' || ext === '.html' || ext === '.jsx') {
+        const filePath = path.join(g3Config._g3Path, sourceDir.key, filename)
         const jsxPath = path.join(g3Config._g3Path, sourceDir.key, filename.substring(0, filename.lastIndexOf('.')) + '.jsx')
-        const html = lib.readFileSync(htmlPath)
-        const jsx = lib.getJSXContent(html, sourceDir.components)
+        const content = lib.readFileSync(filePath)
+        const jsx = lib.getJSXContent(ext, content, sourceDir.components)
         lib.writeSync(jsxPath, jsx)
       }
     })

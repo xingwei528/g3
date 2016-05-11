@@ -7,7 +7,7 @@ describe('jsx', function () {
         var htmlToJSX = new htmltojsx_1.default({
             createClass: false
         }, ['Link']);
-        var content = htmlToJSX.convert("\n      <ul>\n      <li><Link to=\"/team\" activeClassName=\"active\"></Link><br /></li>\n      <li><Link to=\"/about\" activeClassName=\"active\"><i class=\"icon about\"></i> \u5173\u4E8E\u6211\u4EEC</Link></li>\n  </ul>\n      ");
+        var content = htmlToJSX.convert("\n      <Link to=\"/about\" activeClassName=\"active\"><i class=\"icon about\"></i> \u5173\u4E8E\u6211\u4EEC</Link>\n      ");
         console.log(content);
         done();
     });

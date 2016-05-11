@@ -21,11 +21,12 @@ function parseSourceFiles(g3Config) {
             lib.writeSync(configPath, configContent);
         }
         sourceDir.filenames.forEach(function (filename) {
-            if (path.extname(filename) === '.html') {
-                var htmlPath = path.join(g3Config._g3Path, sourceDir.key, filename);
+            var ext = path.extname(filename);
+            if (ext === '.html' || ext === '.html' || ext === '.jsx') {
+                var filePath = path.join(g3Config._g3Path, sourceDir.key, filename);
                 var jsxPath = path.join(g3Config._g3Path, sourceDir.key, filename.substring(0, filename.lastIndexOf('.')) + '.jsx');
-                var html = lib.readFileSync(htmlPath);
-                var jsx = lib.getJSXContent(html, sourceDir.components);
+                var content = lib.readFileSync(filePath);
+                var jsx = lib.getJSXContent(ext, content, sourceDir.components);
                 lib.writeSync(jsxPath, jsx);
             }
         });
