@@ -14,7 +14,8 @@ export function writeHTML(g3Config: models.G3Config, routePath: string, devServe
   if (routePath.indexOf('*') !== -1 || routePath.indexOf(':') !== -1) return
   const rootFilepath = path.join(g3Config._appPath, routePath, "index.html")
   const filepath = path.join(g3Config._destinationPath, routePath, "index.html")
-  let scripts = `<script src="/assets/js/bundle.js?v=${g3Config._timeStamp}"></script>`
+  const publicPath = _.trimEnd(g3Config.output.publicPath, '/')
+  let scripts = `<script src="${publicPath}/${g3Config.output.filename}?v=${g3Config._timeStamp}"></script>`
   if (devServer) {
     scripts = '<script src="/webpack-dev-server.js"></script><script src="/bundle.js"></script>'
   }

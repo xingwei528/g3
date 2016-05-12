@@ -1,5 +1,6 @@
 "use strict";
 var path = require('path');
+var _ = require('lodash');
 var fse = require('fs-extra');
 var models = require('../../models');
 var lib = require('../');
@@ -12,7 +13,8 @@ function writeHTML(g3Config, routePath, devServer) {
         return;
     var rootFilepath = path.join(g3Config._appPath, routePath, "index.html");
     var filepath = path.join(g3Config._destinationPath, routePath, "index.html");
-    var scripts = "<script src=\"/assets/js/bundle.js?v=" + g3Config._timeStamp + "\"></script>";
+    var publicPath = _.trimEnd(g3Config.output.publicPath, '/');
+    var scripts = "<script src=\"" + publicPath + "/" + g3Config.output.filename + "?v=" + g3Config._timeStamp + "\"></script>";
     if (devServer) {
         scripts = '<script src="/webpack-dev-server.js"></script><script src="/bundle.js"></script>';
     }

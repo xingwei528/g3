@@ -14,4 +14,10 @@ export class G3Config {
   destination: string
   history: string
   port: number
+
+  output: {
+    path: string
+    publicPath: string
+    filename: string
+  }
 }

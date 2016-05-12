@@ -3,7 +3,8 @@ var lib = require('../');
 var htmltojsx_1 = require('./htmltojsx');
 var models = require('../../models');
 function getJSXContent(ext, content, components) {
-    if (ext === '.jsx' && (content || '').indexOf('return ') !== -1) {
+    content = content || '';
+    if (ext === '.jsx' && (content.indexOf('render(') !== -1 || content.indexOf('export default') !== -1)) {
         return content;
     }
     var namedComponents = components.map(function (component) {

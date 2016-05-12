@@ -19,9 +19,9 @@ function build(appPath) {
         errorDetails: false,
         debug: false,
         output: {
-            path: path.join(g3Config._destinationPath, './assets/js'),
-            publicPath: "/assets/js/",
-            filename: "bundle.js"
+            path: path.join(g3Config._g3Path, g3Config.output.path),
+            publicPath: g3Config.output.publicPath,
+            filename: g3Config.output.filename
         },
         resolve: {
             extensions: ['', '.webpack.js', '.web.js', '.jsx', '.js']

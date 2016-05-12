@@ -21,6 +21,20 @@ function getG3Config(appPath, command) {
     if (!config.history) {
         config.history = 'browserHistory';
     }
+    var defaultOutput = {
+        path: './assets/js/',
+        publicPath: '/assets/js/',
+        filename: 'bundle.js'
+    };
+    if (!config.output) {
+        config.output = defaultOutput;
+    }
+    if (!config.output.path)
+        config.output.path = defaultOutput.path;
+    if (!config.output.publicPath)
+        config.output.publicPath = defaultOutput.publicPath;
+    if (!config.output.filename)
+        config.output.filename = defaultOutput.filename;
     config._files = [];
     config._directories = [];
     fse.readdirSync(config._appPath).forEach(function (p) {
