@@ -1,6 +1,6 @@
 {
   "name": "g3",
-  "version": "0.2.13",
+  "version": "0.2.14",
   "description": "ReactJS Static Site Generator",
   "author": "Get3W <corp@get3w.com>",
   "bin": {
