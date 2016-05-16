@@ -5,4 +5,5 @@ function __export(m) {
 __export(require("./build"));
 __export(require("./run"));
 __export(require("./serve"));
+__export(require("./status"));
 //# sourceMappingURL=index.js.map

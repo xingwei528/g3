@@ -7,6 +7,7 @@
     "g3": "./src/bin/index.js"
   },
   "scripts": {
+    "g3": "node ./src/bin/index.js",
     "test": "node_modules/.bin/mocha src/**/*.spec.js",
     "test-lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
     "test-integration": "node_modules/.bin/mocha ./src/test/integration",
@@ -41,6 +42,7 @@
     "express": "^4.13.4",
     "front-matter": "^2.0.7",
     "fs-extra": "^0.26.7",
+    "js-base64": "^2.1.9",
     "js-yaml": "^3.5.5",
     "jsdom-no-contextify": "^3.1.0",
     "lodash": "^4.6.1",

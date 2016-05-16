@@ -1,10 +1,11 @@
 #!/usr/bin/env node
-
+"use strict";
 var program = require('commander');
-var packageJson = require('../../package.json');
 var commands = require('../commands');
+var home = require('../home');
+var packageJson = require('../../package.json');
 program
-    .version(packageJson.version)
+    .version('G3 Version: ' + packageJson.version)
     .option('-C, --chdir <path>', 'change the working directory')
     .option('-c, --config <path>', 'set config path. defaults to ./deploy.conf')
     .option('-T, --no-tests', 'ignore test hook');
@@ -34,6 +35,24 @@ program
     .action(function (directory) {
     directory = directory || './';
     commands.serve(directory);
-}).on('--help', function () {
+}).on('--help', function () { });
+program
+    .command('status [directory]')
+    .description('execute the given remote directory')
+    .action(function (directory) {
+    directory = directory || './';
+    commands.status(directory);
+}).on('--help', function () { });
+program
+    .command('test')
+    .action(function (cmd) {
+    var homeConfig = home.getConfig();
+    console.log(homeConfig);
+});
+program
+    .command('*')
+    .action(function (cmd) {
+    console.log(cmd + " is not a g3 command.\nSee 'g3 --help'.\n");
 });
 program.parse(process.argv);
+//# sourceMappingURL=index.js.map

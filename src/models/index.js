@@ -3,7 +3,6 @@ function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
 __export(require("./const"));
-__export(require("./dirConfig"));
-__export(require("./g3Config"));
-__export(require("./sourceDir"));
+__export(require("./home"));
+__export(require("./lib"));
 //# sourceMappingURL=index.js.map
