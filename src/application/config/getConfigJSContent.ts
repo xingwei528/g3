@@ -1,6 +1,7 @@
 import * as path from 'path'
 import * as models from '../../models'
-import * as lib from '../'
+import * as lib from '../../lib'
+import * as application from '../'
 
 export function getConfigJSContent(g3Config: models.G3Config, sourceDir: models.SourceDir): string {
   let configJS = ''
@@ -25,7 +26,7 @@ export function getConfigJSContent(g3Config: models.G3Config, sourceDir: models.
   if (sourceDir.config.redirect) {
     let redirect = sourceDir.config.redirect
     if (redirect[0] !== '/') {
-      redirect = lib.urlJoin(lib.getRoutePath(sourceDir), redirect)
+      redirect = lib.urlJoin(application.getRoutePath(sourceDir), redirect)
     }
     configJS += `,
   indexRoute: {

@@ -1,6 +1,7 @@
 "use strict";
 var models = require('../../models');
-var lib = require('../');
+var lib = require('../../lib');
+var application = require('../');
 function getConfigJSContent(g3Config, sourceDir) {
     var configJS = '';
     configJS += 'export default {';
@@ -16,7 +17,7 @@ function getConfigJSContent(g3Config, sourceDir) {
     if (sourceDir.config.redirect) {
         var redirect = sourceDir.config.redirect;
         if (redirect[0] !== '/') {
-            redirect = lib.urlJoin(lib.getRoutePath(sourceDir), redirect);
+            redirect = lib.urlJoin(application.getRoutePath(sourceDir), redirect);
         }
         configJS += ",\n  indexRoute: {\n    onEnter: (nextState, replace) => replace('" + redirect + "')\n  }";
     }

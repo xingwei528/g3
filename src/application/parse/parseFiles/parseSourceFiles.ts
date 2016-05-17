@@ -4,7 +4,8 @@ import * as fse from 'fs-extra'
 import * as marked from 'marked'
 
 import * as models from '../../../models'
-import * as lib from '../../'
+import * as lib from '../../../lib'
+import * as application from '../../'
 
 export function parseSourceFiles(g3Config: models.G3Config): Array<models.SourceDir> {
   let sourceDirs: Array<models.SourceDir> = []
@@ -16,15 +17,15 @@ export function parseSourceFiles(g3Config: models.G3Config): Array<models.Source
   lib.copySync(g3Config._sourcePath, g3Config._g3Path)
 
   if (!lib.isFile(path.join(g3Config._g3Path, models.Const.FILE_APP) + '.jsx') && !lib.isFile(path.join(g3Config._g3Path, models.Const.FILE_APP) + '.html')) {
-    lib.writeSync(path.join(g3Config._g3Path, models.Const.FILE_APP + '.jsx'), lib.getAppJSContent(g3Config))
+    lib.writeSync(path.join(g3Config._g3Path, models.Const.FILE_APP + '.jsx'), application.getAppJSContent(g3Config))
   }
 
-  lib.getSourceDirs(g3Config, g3Config._sourcePath, null, false, sourceDirs)
+  application.getSourceDirs(g3Config, g3Config._sourcePath, null, false, sourceDirs)
 
   sourceDirs.forEach((sourceDir: models.SourceDir) => {
     if (!sourceDir.isExclude) {
       const configPath = path.join(g3Config._g3Path, sourceDir.key, models.Const.FILE_CONFIG_JS)
-      const configContent = lib.getConfigJSContent(g3Config, sourceDir)
+      const configContent = application.getConfigJSContent(g3Config, sourceDir)
       lib.writeSync(configPath, configContent)
     }
 

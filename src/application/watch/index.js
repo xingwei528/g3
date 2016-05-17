@@ -3,7 +3,8 @@ var path = require('path');
 var _ = require('lodash');
 var chokidar = require('chokidar');
 var models = require('../../models');
-var lib = require('../');
+var lib = require('../../lib');
+var application = require('../');
 function syncFile(g3Config, sourceDirs, p) {
     var ext = path.extname(p);
     var dirpath = path.dirname(p);
@@ -32,7 +33,7 @@ function syncFile(g3Config, sourceDirs, p) {
         console.log(sourceDir);
         if (sourceDir) {
             var configPath = path.join(g3Config._g3Path, sourceDir.key, models.Const.FILE_CONFIG_JS);
-            var configContent = lib.getConfigJSContent(g3Config, sourceDir);
+            var configContent = application.getConfigJSContent(g3Config, sourceDir);
             lib.writeSync(configPath, configContent);
         }
     }

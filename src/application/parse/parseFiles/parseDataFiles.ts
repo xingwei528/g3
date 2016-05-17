@@ -4,7 +4,7 @@ import * as fse from 'fs-extra'
 import * as marked from 'marked'
 
 import * as models from '../../../models'
-import * as lib from '../../'
+import * as lib from '../../../lib'
 
 export function parseDataFiles(g3Config: models.G3Config) {
   if (!lib.isDirectory(g3Config._dataPath)) return

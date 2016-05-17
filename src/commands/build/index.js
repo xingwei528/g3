@@ -3,14 +3,15 @@ var path = require('path');
 var webpack = require('webpack');
 var models = require('../../models');
 var lib = require('../../lib');
+var application = require('../../application');
 function build(appPath) {
-    var g3Config = lib.getG3Config(appPath, 'build');
+    var g3Config = application.getG3Config(appPath, 'build');
     lib.copyAppFiles(g3Config);
-    var sourceDirs = lib.parse(g3Config);
+    var sourceDirs = application.parse(g3Config);
     if (!sourceDirs || sourceDirs.length === 0)
         return;
     sourceDirs.forEach(function (sourceDir) {
-        var routePath = lib.getRoutePath(sourceDir);
+        var routePath = application.getRoutePath(sourceDir);
         lib.writeHTML(g3Config, routePath, false);
     });
     var options = {

@@ -4,18 +4,19 @@ import * as webpack from 'webpack'
 const WebpackDevServer = require("webpack-dev-server")
 import * as models from '../../models'
 import * as lib from '../../lib'
+import * as application from '../../application'
 import * as commands from '../'
 
 export function run(appPath) {
-  const g3Config: models.G3Config = lib.getG3Config(appPath, 'run')
+  const g3Config: models.G3Config = application.getG3Config(appPath, 'run')
   lib.copyAppFiles(g3Config)
 
-  const sourceDirs: Array<models.SourceDir> = lib.parse(g3Config)
+  const sourceDirs: Array<models.SourceDir> = application.parse(g3Config)
   if (!sourceDirs || sourceDirs.length === 0) return commands.serve(appPath)
 
   lib.writeHTML(g3Config, '/', true)
 
-  lib.watch(g3Config, sourceDirs)
+  application.watch(g3Config, sourceDirs)
 
   var options = {
     entry: path.join(g3Config._g3Path, models.Const.FILE_APP + '.jsx'),

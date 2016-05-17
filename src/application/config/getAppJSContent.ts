@@ -1,6 +1,5 @@
 import * as path from 'path'
 import * as models from '../../models'
-import * as lib from '../'
 
 export function getAppJSContent(g3Config: models.G3Config): string {
   return `import React from 'react';

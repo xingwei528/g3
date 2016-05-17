@@ -2,10 +2,11 @@ var express = require('express')
 var compression = require('compression')
 import * as models from '../../models'
 import * as lib from '../../lib'
+import * as application from '../../application'
 import * as commands from '../'
 
 export function serve(appPath) {
-  const g3Config: models.G3Config = lib.getG3Config(appPath, 'serve')
+  const g3Config: models.G3Config = application.getG3Config(appPath, 'serve')
   if (!lib.isDirectory(g3Config._destinationPath)) {
     commands.build(appPath)
   }

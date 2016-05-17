@@ -3,12 +3,18 @@ import * as fse from 'fs-extra'
 import * as _ from 'lodash'
 
 import * as models from '../../models'
-import * as lib from '../'
+import * as lib from '../../lib'
+
+function readG3Config(appPath: string): models.G3Config {
+  const configPath = path.join(appPath, models.Const.FILE_G3_YML)
+  const config: models.G3Config = <models.G3Config>lib.readYML(configPath)
+  return config || new models.G3Config()
+}
 
 export function getG3Config(appPath: string, command: string): models.G3Config {
   appPath = path.resolve(appPath)
 
-  let config: models.G3Config = lib.readG3Config(appPath)
+  let config: models.G3Config = readG3Config(appPath)
   config._appPath = appPath
   config._g3Path = path.join(appPath, models.Const.DIR_DOT_G3)
   config._dataPath = path.join(appPath, models.Const.DIR_DATA)

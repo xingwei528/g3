@@ -1,7 +1,8 @@
 "use strict";
 var path = require('path');
 var models = require('../../../models');
-var lib = require('../../');
+var lib = require('../../../lib');
+var application = require('../../');
 function parseSourceFiles(g3Config) {
     var sourceDirs = [];
     if (!lib.isDirectory(g3Config._sourcePath))
@@ -11,13 +12,13 @@ function parseSourceFiles(g3Config) {
     }
     lib.copySync(g3Config._sourcePath, g3Config._g3Path);
     if (!lib.isFile(path.join(g3Config._g3Path, models.Const.FILE_APP) + '.jsx') && !lib.isFile(path.join(g3Config._g3Path, models.Const.FILE_APP) + '.html')) {
-        lib.writeSync(path.join(g3Config._g3Path, models.Const.FILE_APP + '.jsx'), lib.getAppJSContent(g3Config));
+        lib.writeSync(path.join(g3Config._g3Path, models.Const.FILE_APP + '.jsx'), application.getAppJSContent(g3Config));
     }
-    lib.getSourceDirs(g3Config, g3Config._sourcePath, null, false, sourceDirs);
+    application.getSourceDirs(g3Config, g3Config._sourcePath, null, false, sourceDirs);
     sourceDirs.forEach(function (sourceDir) {
         if (!sourceDir.isExclude) {
             var configPath = path.join(g3Config._g3Path, sourceDir.key, models.Const.FILE_CONFIG_JS);
-            var configContent = lib.getConfigJSContent(g3Config, sourceDir);
+            var configContent = application.getConfigJSContent(g3Config, sourceDir);
             lib.writeSync(configPath, configContent);
         }
         sourceDir.filenames.forEach(function (filename) {

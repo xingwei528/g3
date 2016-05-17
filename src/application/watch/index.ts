@@ -3,7 +3,8 @@ import * as _ from 'lodash'
 import * as chokidar from 'chokidar'
 
 import * as models from '../../models'
-import * as lib from '../'
+import * as lib from '../../lib'
+import * as application from '../'
 
 function syncFile(g3Config: models.G3Config, sourceDirs: Array<models.SourceDir>, p: string) {
   const ext = path.extname(p)
@@ -31,7 +32,7 @@ function syncFile(g3Config: models.G3Config, sourceDirs: Array<models.SourceDir>
     console.log(sourceDir)
     if (sourceDir) {
       const configPath = path.join(g3Config._g3Path, sourceDir.key, models.Const.FILE_CONFIG_JS)
-      const configContent = lib.getConfigJSContent(g3Config, sourceDir)
+      const configContent = application.getConfigJSContent(g3Config, sourceDir)
       lib.writeSync(configPath, configContent)
     }
   } else {

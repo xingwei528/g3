@@ -3,16 +3,17 @@ import * as _ from 'lodash'
 import * as webpack from 'webpack'
 import * as models from '../../models'
 import * as lib from '../../lib'
+import * as application from '../../application'
 
 export function build(appPath) {
-  const g3Config: models.G3Config = lib.getG3Config(appPath, 'build')
+  const g3Config: models.G3Config = application.getG3Config(appPath, 'build')
   lib.copyAppFiles(g3Config)
 
-  const sourceDirs: Array<models.SourceDir> = lib.parse(g3Config)
+  const sourceDirs: Array<models.SourceDir> = application.parse(g3Config)
   if (!sourceDirs || sourceDirs.length === 0) return
 
   sourceDirs.forEach((sourceDir: models.SourceDir) => {
-    const routePath = lib.getRoutePath(sourceDir)
+    const routePath = application.getRoutePath(sourceDir)
     lib.writeHTML(g3Config, routePath, false)
   })
 

@@ -2,9 +2,10 @@
 var express = require('express');
 var compression = require('compression');
 var lib = require('../../lib');
+var application = require('../../application');
 var commands = require('../');
 function serve(appPath) {
-    var g3Config = lib.getG3Config(appPath, 'serve');
+    var g3Config = application.getG3Config(appPath, 'serve');
     if (!lib.isDirectory(g3Config._destinationPath)) {
         commands.build(appPath);
     }

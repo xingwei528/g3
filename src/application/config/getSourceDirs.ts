@@ -3,7 +3,7 @@ import * as _ from 'lodash'
 import * as fse from 'fs-extra'
 
 import * as models from '../../models'
-import * as lib from '../'
+import * as lib from '../../lib'
 
 export function getRoutePath(sourceDir: models.SourceDir): string {
   if (sourceDir.parent) {

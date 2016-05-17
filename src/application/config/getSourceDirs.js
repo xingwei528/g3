@@ -1,7 +1,7 @@
 "use strict";
 var path = require('path');
 var models = require('../../models');
-var lib = require('../');
+var lib = require('../../lib');
 function getRoutePath(sourceDir) {
     if (sourceDir.parent) {
         return lib.urlJoin(getRoutePath(sourceDir.parent), sourceDir.config.path);

@@ -6,17 +6,16 @@ import * as yaml from 'js-yaml'
 import * as models from '../../models'
 import * as lib from '../'
 
-export function readG3Config(appPath: string): models.G3Config {
-  let config = null
+export function readYML(ymlPath: string): Object {
+  let obj = null
   try {
-    const ymlpath = path.join(appPath, models.Const.FILE_G3_YML)
-    if (lib.isFile(ymlpath)) {
-      config = yaml.safeLoad(fse.readFileSync(ymlpath, 'utf8'))
+    if (lib.isFile(ymlPath)) {
+      obj = yaml.safeLoad(fse.readFileSync(ymlPath, 'utf8'))
     }
   } catch (e) {
     console.log(e);
   }
-  return config || new models.G3Config()
+  return obj
 }
 
 export function readDirConfig(sourceDir: models.SourceDir) {

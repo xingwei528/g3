@@ -2,10 +2,15 @@
 var path = require('path');
 var fse = require('fs-extra');
 var models = require('../../models');
-var lib = require('../');
+var lib = require('../../lib');
+function readG3Config(appPath) {
+    var configPath = path.join(appPath, models.Const.FILE_G3_YML);
+    var config = lib.readYML(configPath);
+    return config || new models.G3Config();
+}
 function getG3Config(appPath, command) {
     appPath = path.resolve(appPath);
-    var config = lib.readG3Config(appPath);
+    var config = readG3Config(appPath);
     config._appPath = appPath;
     config._g3Path = path.join(appPath, models.Const.DIR_DOT_G3);
     config._dataPath = path.join(appPath, models.Const.DIR_DATA);
@@ -51,4 +56,4 @@ function getG3Config(appPath, command) {
     return config;
 }
 exports.getG3Config = getG3Config;
-//# sourceMappingURL=getConfig.js.map
+//# sourceMappingURL=getG3Config.js.map

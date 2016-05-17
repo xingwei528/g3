@@ -4,20 +4,19 @@ var fse = require('fs-extra');
 var yaml = require('js-yaml');
 var models = require('../../models');
 var lib = require('../');
-function readG3Config(appPath) {
-    var config = null;
+function readYML(ymlPath) {
+    var obj = null;
     try {
-        var ymlpath = path.join(appPath, models.Const.FILE_G3_YML);
-        if (lib.isFile(ymlpath)) {
-            config = yaml.safeLoad(fse.readFileSync(ymlpath, 'utf8'));
+        if (lib.isFile(ymlPath)) {
+            obj = yaml.safeLoad(fse.readFileSync(ymlPath, 'utf8'));
         }
     }
     catch (e) {
         console.log(e);
     }
-    return config || new models.G3Config();
+    return obj;
 }
-exports.readG3Config = readG3Config;
+exports.readYML = readYML;
 function readDirConfig(sourceDir) {
     try {
         var ymlpath = path.join(sourceDir.path, models.Const.FILE_CONFIG_YML);

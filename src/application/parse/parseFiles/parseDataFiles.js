@@ -3,7 +3,7 @@ var path = require('path');
 var _ = require('lodash');
 var marked = require('marked');
 var models = require('../../../models');
-var lib = require('../../');
+var lib = require('../../../lib');
 function parseDataFiles(g3Config) {
     if (!lib.isDirectory(g3Config._dataPath))
         return;
