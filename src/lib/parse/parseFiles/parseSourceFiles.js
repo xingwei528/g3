@@ -26,7 +26,13 @@ function parseSourceFiles(g3Config) {
                 var filePath = path.join(g3Config._g3Path, sourceDir.key, filename);
                 var jsxPath = path.join(g3Config._g3Path, sourceDir.key, filename.substring(0, filename.lastIndexOf('.')) + '.jsx');
                 var content = lib.readFileSync(filePath);
-                var jsx = lib.getJSXContent(ext, content, sourceDir.components);
+                var jsx = '';
+                if (sourceDir.key === '/' && filename.toLowerCase() === 'app.jsx') {
+                    jsx = content;
+                }
+                else {
+                    jsx = lib.getJSXContent(ext, content, sourceDir.components);
+                }
                 lib.writeSync(jsxPath, jsx);
             }
         });

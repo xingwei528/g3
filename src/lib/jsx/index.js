@@ -4,7 +4,7 @@ var htmltojsx_1 = require('./htmltojsx');
 var models = require('../../models');
 function getJSXContent(ext, content, components) {
     content = content || '';
-    if (ext === '.jsx' && (content.indexOf('render(') !== -1 || content.indexOf('export default') !== -1)) {
+    if (ext === '.jsx' && content.indexOf('export default') !== -1) {
         return content;
     }
     var namedComponents = components.map(function (component) {

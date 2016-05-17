@@ -4,7 +4,7 @@ import * as models from '../../models'
 
 export function getJSXContent(ext: string, content: string, components: Array<string>) {
   content = content || ''
-  if (ext === '.jsx' && (content.indexOf('render(') !== -1 || content.indexOf('export default') !== -1)) {
+  if (ext === '.jsx' && content.indexOf('export default') !== -1) {
     return content
   }
 

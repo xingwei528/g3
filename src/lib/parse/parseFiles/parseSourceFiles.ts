@@ -34,7 +34,12 @@ export function parseSourceFiles(g3Config: models.G3Config): Array<models.Source
         const filePath = path.join(g3Config._g3Path, sourceDir.key, filename)
         const jsxPath = path.join(g3Config._g3Path, sourceDir.key, filename.substring(0, filename.lastIndexOf('.')) + '.jsx')
         const content = lib.readFileSync(filePath)
-        const jsx = lib.getJSXContent(ext, content, sourceDir.components)
+        let jsx = ''
+        if (sourceDir.key === '/' && filename.toLowerCase() === 'app.jsx') {
+          jsx = content
+        } else {
+          jsx = lib.getJSXContent(ext, content, sourceDir.components)
+        }
         lib.writeSync(jsxPath, jsx)
       }
     })
