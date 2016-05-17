@@ -16,6 +16,16 @@
     "!node_modules/**/*.ts"
   ],
   "files": [
+    "api/api.ts",
+    "api/client/apps_files.ts",
+    "api/client/apps_folders.ts",
+    "api/client/apps.ts",
+    "api/client/search.ts",
+    "api/client/user.ts",
+    "api/client/users_tokens.ts",
+    "api/client/users.ts",
+    "api/http.ts",
+    "api/index.ts",
     "application/config/getAppJSContent.ts",
     "application/config/getConfigJSContent.ts",
     "application/config/getG3Config.ts",

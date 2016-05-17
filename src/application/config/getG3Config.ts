@@ -15,6 +15,7 @@ export function getG3Config(appPath: string, command: string): models.G3Config {
   appPath = path.resolve(appPath)
 
   let config: models.G3Config = readG3Config(appPath)
+  config._name = path.dirname(appPath)
   config._appPath = appPath
   config._g3Path = path.join(appPath, models.Const.DIR_DOT_G3)
   config._dataPath = path.join(appPath, models.Const.DIR_DATA)

@@ -1,4 +1,5 @@
 export class G3Config {
+  _name: string
   _appPath: string
   _g3Path: string
   _dataPath: string

@@ -10,7 +10,7 @@ export function homePath(): string {
 }
 
 export function getConfig(): models.HomeConfig {
-	const configFilePath = path.join(homePath(), models.Const.HomeDirName, models.Const.HomeConfigName)
+	const configFilePath = path.join(homePath(), models.Const.HOME_DIR_NAME, models.Const.HOME_CONFIG_NAME)
   if (!lib.isFile(configFilePath)) {
     lib.writeSync(configFilePath, "{}")
   }
@@ -23,7 +23,7 @@ export function getConfig(): models.HomeConfig {
 // saveConfig encodes and writes out all the authorization information to
 // the given writer
 export function saveConfig(config: models.HomeConfig) {
-  const configFilePath = path.join(homePath(), models.Const.HomeDirName, models.Const.HomeConfigName)
+  const configFilePath = path.join(homePath(), models.Const.HOME_DIR_NAME, models.Const.HOME_CONFIG_NAME)
 
   const configToSave: models.HomeConfig = _.assign({}, config)
   configToSave.auth = encodeAuth(config.authConfig)

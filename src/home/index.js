@@ -9,7 +9,7 @@ function homePath() {
 }
 exports.homePath = homePath;
 function getConfig() {
-    var configFilePath = path.join(homePath(), models.Const.HomeDirName, models.Const.HomeConfigName);
+    var configFilePath = path.join(homePath(), models.Const.HOME_DIR_NAME, models.Const.HOME_CONFIG_NAME);
     if (!lib.isFile(configFilePath)) {
         lib.writeSync(configFilePath, "{}");
     }
@@ -19,7 +19,7 @@ function getConfig() {
 }
 exports.getConfig = getConfig;
 function saveConfig(config) {
-    var configFilePath = path.join(homePath(), models.Const.HomeDirName, models.Const.HomeConfigName);
+    var configFilePath = path.join(homePath(), models.Const.HOME_DIR_NAME, models.Const.HOME_CONFIG_NAME);
     var configToSave = _.assign({}, config);
     configToSave.auth = encodeAuth(config.authConfig);
     configToSave.authConfig = null;

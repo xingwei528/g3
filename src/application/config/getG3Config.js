@@ -11,6 +11,7 @@ function readG3Config(appPath) {
 function getG3Config(appPath, command) {
     appPath = path.resolve(appPath);
     var config = readG3Config(appPath);
+    config._name = path.dirname(appPath);
     config._appPath = appPath;
     config._g3Path = path.join(appPath, models.Const.DIR_DOT_G3);
     config._dataPath = path.join(appPath, models.Const.DIR_DATA);
