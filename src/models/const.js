@@ -23,6 +23,8 @@ var Const = (function () {
         'indexlink'
     ];
     Const.DEFAULT_IMPORTS = "import React from 'react';\nimport { Link, IndexLink } from 'react-router';";
+    Const.HomeDirName = ".g3";
+    Const.HomeConfigName = "config.json";
     return Const;
 }());
 exports.Const = Const;

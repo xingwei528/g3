@@ -25,4 +25,9 @@ export class Const {
   ]
   static DEFAULT_IMPORTS = `import React from 'react';
 import { Link, IndexLink } from 'react-router';`
+
+  // HomeDirName is the config directory name
+  static HomeDirName = ".g3"
+  // HomeConfigName is the name of root config file
+  static HomeConfigName = "config.json"
 }

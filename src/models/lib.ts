@@ -21,3 +21,24 @@ export class G3Config {
     filename: string
   }
 }
+
+export class DirConfig {
+  path: string
+  layout: string
+  index: string
+  redirect: string
+  includes: Array<string>
+  excludes: Array<string>
+}
+
+export class SourceDir {
+  key: string
+  path: string
+  filenames: Array<string>
+  dirnames: Array<string>
+  components: Array<string>
+  isExclude: boolean
+
+  parent: SourceDir
+  config: DirConfig
+}
